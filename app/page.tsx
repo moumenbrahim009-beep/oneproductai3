@@ -3,6 +3,7 @@ import Hero from "./components/Hero";
 import Problem from "./components/Problem";
 import Solution from "./components/Solution";
 import HowItWorks from "./components/HowItWorks";
+import CoachInRoom from "./components/CoachInRoom";
 import WhatYouGet from "./components/WhatYouGet";
 import Timeline from "./components/Timeline";
 import Chatbot from "./components/Chatbot";
@@ -20,6 +21,7 @@ export default function Home() {
         <Problem />
         <Solution />
         <HowItWorks />
+        <CoachInRoom />
         <WhatYouGet />
         <Timeline />
         <Chatbot />
