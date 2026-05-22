@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import FadeIn from "./ui/FadeIn";
+import Reveal from "./ui/Reveal";
 import SectionLabel from "./ui/SectionLabel";
 
 type Message = { role: "bot" | "user"; text: string };
@@ -66,33 +66,37 @@ export default function Chatbot() {
   const remaining = qa.filter((item) => !asked.includes(item.q));
 
   return (
-    <section className="relative border-t-2 border-ink bg-bone px-6 py-24 md:px-8 md:py-28 lg:py-32">
+    <section className="relative px-6 py-28 md:px-8 md:py-36">
       <div className="mx-auto max-w-7xl">
         <div className="mx-auto max-w-3xl text-center">
-          <FadeIn>
+          <Reveal>
             <SectionLabel>Have Questions?</SectionLabel>
+          </Reveal>
+          <Reveal delay={0.05}>
             <h2 className="mt-6 font-display text-4xl font-extrabold tracking-tight text-ink md:text-5xl">
-              Ask the engine.
+              Ask the <span className="text-gradient">engine.</span>
             </h2>
-            <p className="mt-5 text-lg text-ink-soft">
+          </Reveal>
+          <Reveal delay={0.1}>
+            <p className="mt-6 text-lg text-ink-muted">
               A taste of what it feels like to work with the protocol.
             </p>
-          </FadeIn>
+          </Reveal>
         </div>
 
-        <FadeIn delay={0.1} className="mx-auto mt-12 max-w-2xl">
-          <div className="overflow-hidden rounded-xl border-2 border-ink bg-card shadow-brut-lg">
+        <Reveal delay={0.1} className="mx-auto mt-12 max-w-2xl">
+          <div className="glass border-glow overflow-hidden rounded-3xl shadow-[0_30px_80px_-40px_rgba(34,211,238,0.5)]">
             {/* Header */}
-            <div className="flex items-center gap-3 border-b-2 border-ink bg-paper px-5 py-4">
-              <div className="flex h-9 w-9 items-center justify-center rounded-lg border-2 border-ink bg-flare text-sm font-black text-paper">
+            <div className="flex items-center gap-3 border-b border-white/10 bg-white/[0.03] px-5 py-4">
+              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-violet via-indigo to-cyan text-sm font-black text-white">
                 AI
               </div>
               <div>
                 <div className="font-display text-sm font-bold text-ink">
                   One Product AI
                 </div>
-                <div className="flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-wide text-ink-faint">
-                  <span className="h-2 w-2 rounded-full bg-go" />
+                <div className="flex items-center gap-1.5 text-[11px] uppercase tracking-wide text-ink-faint">
+                  <span className="h-2 w-2 rounded-full bg-go shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
                   online
                 </div>
               </div>
@@ -101,24 +105,24 @@ export default function Chatbot() {
             {/* Messages */}
             <div
               ref={scrollRef}
-              className="flex h-80 flex-col gap-3 overflow-y-auto px-5 py-5 [scrollbar-width:thin]"
+              className="flex h-80 flex-col gap-3 overflow-y-auto px-5 py-5"
             >
               <AnimatePresence initial={false}>
                 {messages.map((m, i) => (
                   <motion.div
                     key={i}
-                    initial={{ opacity: 0, y: 8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3, ease: "easeOut" }}
+                    initial={{ opacity: 0, y: 10, filter: "blur(6px)" }}
+                    animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                    transition={{ duration: 0.35, ease: "easeOut" }}
                     className={`flex ${
                       m.role === "user" ? "justify-end" : "justify-start"
                     }`}
                   >
                     <div
-                      className={`max-w-[80%] break-words rounded-xl border-2 border-ink px-4 py-3 text-sm leading-relaxed ${
+                      className={`max-w-[80%] break-words rounded-2xl px-4 py-3 text-sm leading-relaxed ${
                         m.role === "user"
-                          ? "rounded-br-sm bg-flare text-paper"
-                          : "rounded-bl-sm bg-bone text-ink"
+                          ? "rounded-br-md bg-gradient-to-br from-violet to-indigo text-white"
+                          : "rounded-bl-md border border-white/10 bg-white/[0.05] text-ink-muted"
                       }`}
                     >
                       {m.text}
@@ -128,16 +132,16 @@ export default function Chatbot() {
                 {typing && (
                   <motion.div
                     key="typing"
-                    initial={{ opacity: 0, y: 8 }}
+                    initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0 }}
                     className="flex justify-start"
                   >
-                    <div className="flex items-center gap-1 rounded-xl rounded-bl-sm border-2 border-ink bg-bone px-4 py-4">
+                    <div className="flex items-center gap-1 rounded-2xl rounded-bl-md border border-white/10 bg-white/[0.05] px-4 py-4">
                       {[0, 1, 2].map((d) => (
                         <span
                           key={d}
-                          className="typing-dot h-2 w-2 rounded-full bg-flare"
+                          className="typing-dot h-2 w-2 rounded-full bg-gradient-to-r from-violet to-cyan"
                           style={{ animationDelay: `${d * 0.15}s` }}
                         />
                       ))}
@@ -148,26 +152,26 @@ export default function Chatbot() {
             </div>
 
             {/* Suggestion chips */}
-            <div className="flex flex-wrap gap-2 border-t-2 border-ink bg-paper px-5 py-4">
+            <div className="flex flex-wrap gap-2 border-t border-white/10 bg-white/[0.03] px-5 py-4">
               {remaining.length > 0 ? (
                 remaining.map((item) => (
                   <button
                     key={item.q}
                     onClick={() => handleAsk(item)}
                     disabled={typing}
-                    className="rounded-full border-2 border-ink bg-card px-4 py-2 text-sm font-medium text-ink transition-colors hover:bg-flare hover:text-paper disabled:cursor-not-allowed disabled:opacity-50"
+                    className="rounded-full border border-white/15 bg-white/[0.03] px-4 py-2 text-sm text-ink-muted transition-all duration-300 hover:border-violet/60 hover:bg-violet/10 hover:text-ink disabled:cursor-not-allowed disabled:opacity-50"
                   >
                     {item.q}
                   </button>
                 ))
               ) : (
-                <span className="font-mono text-sm uppercase tracking-wide text-ink-faint">
+                <span className="text-sm uppercase tracking-wide text-ink-faint">
                   That’s the tour. The protocol covers the rest.
                 </span>
               )}
             </div>
           </div>
-        </FadeIn>
+        </Reveal>
       </div>
     </section>
   );

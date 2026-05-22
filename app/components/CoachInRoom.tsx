@@ -8,7 +8,7 @@ import {
   useReducedMotion,
 } from "framer-motion";
 import { Check, RotateCcw } from "lucide-react";
-import FadeIn from "./ui/FadeIn";
+import Reveal from "./ui/Reveal";
 import GradientText from "./ui/GradientText";
 import SectionLabel from "./ui/SectionLabel";
 
@@ -159,24 +159,28 @@ export default function CoachInRoom() {
   const finished = revealed >= conv.messages.length;
 
   return (
-    <section className="relative border-t-2 border-ink px-6 pb-24 pt-24 md:px-8 md:pb-28 md:pt-28 lg:pb-32 lg:pt-32">
+    <section className="relative px-6 py-28 md:px-8 md:py-36">
       <div className="mx-auto max-w-7xl">
         <div className="mx-auto max-w-3xl text-center">
-          <FadeIn>
+          <Reveal>
             <SectionLabel>The Coach</SectionLabel>
+          </Reveal>
+          <Reveal delay={0.05}>
             <h2 className="mt-6 font-display text-4xl font-extrabold tracking-tight text-ink md:text-5xl">
               You&apos;re not alone with the protocol.
               <br />
               The Coach is <GradientText>in the room</GradientText>.
             </h2>
-            <p className="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-ink-soft">
+          </Reveal>
+          <Reveal delay={0.1}>
+            <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-ink-muted">
               Three real moments. Three real people. Watch what happens when the
               protocol meets the human.
             </p>
-          </FadeIn>
+          </Reveal>
         </div>
 
-        <FadeIn delay={0.1} className="mt-16">
+        <Reveal delay={0.1} className="mt-16">
           <div
             ref={sceneRef}
             className="grid gap-5 lg:grid-cols-[320px_1fr] lg:gap-8"
@@ -195,34 +199,26 @@ export default function CoachInRoom() {
                     role="tab"
                     aria-selected={isActive}
                     onClick={() => setActive(i)}
-                    className={`group flex flex-col items-center gap-3 rounded-xl border-2 border-ink p-4 text-center transition-all duration-150 lg:flex-row lg:text-left ${
+                    className={`group flex flex-col items-center gap-3 rounded-2xl p-4 text-center transition-all duration-300 lg:flex-row lg:text-left ${
                       isActive
-                        ? "bg-flare text-paper shadow-brut"
-                        : "bg-card text-ink hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-brut"
+                        ? "glass border-glow shadow-[0_10px_40px_-20px_rgba(139,92,246,0.8)]"
+                        : "border border-white/5 bg-white/[0.02] hover:bg-white/[0.05]"
                     }`}
                   >
                     <div
-                      className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border-2 text-base font-black ${
+                      className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-base font-black transition-all duration-300 ${
                         isActive
-                          ? "border-paper bg-paper text-flare"
-                          : "border-ink bg-flare text-paper"
+                          ? "bg-gradient-to-br from-violet via-indigo to-cyan text-white shadow-[0_4px_20px_-4px_rgba(139,92,246,0.9)]"
+                          : "bg-white/5 text-ink-muted group-hover:text-ink"
                       }`}
                     >
                       {c.initial}
                     </div>
                     <div className="min-w-0">
-                      <div
-                        className={`truncate font-display text-sm font-bold ${
-                          isActive ? "text-paper" : "text-ink"
-                        }`}
-                      >
+                      <div className="truncate font-display text-sm font-bold text-ink">
                         {c.name}
                       </div>
-                      <div
-                        className={`mt-0.5 truncate font-mono text-[10px] uppercase tracking-wide ${
-                          isActive ? "text-paper/80" : "text-ink-faint"
-                        }`}
-                      >
+                      <div className="mt-0.5 truncate text-[10px] uppercase tracking-wide text-ink-faint">
                         {c.status}
                       </div>
                     </div>
@@ -232,25 +228,25 @@ export default function CoachInRoom() {
             </div>
 
             {/* Conversation panel */}
-            <div className="overflow-hidden rounded-xl border-2 border-ink bg-card shadow-brut-lg">
+            <div className="glass border-glow overflow-hidden rounded-3xl shadow-[0_30px_80px_-40px_rgba(139,92,246,0.6)]">
               {/* Header */}
-              <div className="flex items-center gap-3 border-b-2 border-ink bg-bone px-5 py-4 md:px-6">
-                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border-2 border-ink bg-flare text-xs font-black text-paper">
+              <div className="flex items-center gap-3 border-b border-white/10 bg-white/[0.03] px-5 py-4 md:px-6">
+                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-violet via-indigo to-cyan text-xs font-black text-white">
                   OPA
                 </div>
                 <div className="min-w-0 flex-1">
                   <div className="font-display text-sm font-bold text-ink">
                     One Product AI · Coach
                   </div>
-                  <div className="flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-wide text-ink-faint">
-                    <span className="h-2 w-2 rounded-full bg-go" />
+                  <div className="flex items-center gap-1.5 text-[11px] uppercase tracking-wide text-ink-faint">
+                    <span className="h-2 w-2 rounded-full bg-go shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
                     Coaching {conv.name.split(" · ")[0]}
                   </div>
                 </div>
                 <button
                   onClick={play}
                   aria-label="Replay this conversation"
-                  className="flex shrink-0 items-center gap-1.5 rounded-md border-2 border-ink bg-card px-3 py-1.5 font-mono text-[11px] font-semibold uppercase tracking-wide text-ink transition-colors hover:bg-flare hover:text-paper"
+                  className="glass flex shrink-0 items-center gap-1.5 rounded-full px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wide text-ink-muted transition-colors hover:text-ink"
                 >
                   <RotateCcw className="h-3.5 w-3.5" />
                   Replay
@@ -261,34 +257,34 @@ export default function CoachInRoom() {
               <div
                 ref={threadRef}
                 aria-label={`Conversation with ${conv.name}`}
-                className="flex h-[400px] flex-col gap-3 overflow-y-auto px-5 py-5 md:h-[440px] md:px-6 [scrollbar-width:thin]"
+                className="flex h-[400px] flex-col gap-3 overflow-y-auto px-5 py-5 md:h-[440px] md:px-6"
               >
                 <AnimatePresence initial={false}>
                   {conv.messages.slice(0, revealed).map((m, i) =>
                     m.role === "coach" ? (
                       <motion.div
                         key={`${active}-${i}`}
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.35, ease: "easeOut" }}
+                        initial={{ opacity: 0, y: 12, filter: "blur(6px)" }}
+                        animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                        transition={{ duration: 0.4, ease: "easeOut" }}
                         className="flex items-end gap-2"
                       >
-                        <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md border-2 border-ink bg-flare text-[9px] font-black text-paper">
+                        <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-violet to-cyan text-[9px] font-black text-white">
                           OPA
                         </div>
-                        <div className="max-w-[82%] break-words rounded-xl rounded-bl-sm border-2 border-ink bg-flare/12 px-4 py-3 text-sm leading-relaxed text-ink">
+                        <div className="max-w-[82%] break-words rounded-2xl rounded-bl-md border border-violet/30 bg-violet/10 px-4 py-3 text-sm leading-relaxed text-ink">
                           {m.text}
                         </div>
                       </motion.div>
                     ) : (
                       <motion.div
                         key={`${active}-${i}`}
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.35, ease: "easeOut" }}
+                        initial={{ opacity: 0, y: 12, filter: "blur(6px)" }}
+                        animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                        transition={{ duration: 0.4, ease: "easeOut" }}
                         className="flex justify-end"
                       >
-                        <div className="max-w-[82%] break-words rounded-xl rounded-br-sm border-2 border-ink bg-bone px-4 py-3 text-sm leading-relaxed text-ink-soft">
+                        <div className="max-w-[82%] break-words rounded-2xl rounded-br-md border border-white/10 bg-white/[0.05] px-4 py-3 text-sm leading-relaxed text-ink-muted">
                           {m.text}
                         </div>
                       </motion.div>
@@ -297,20 +293,20 @@ export default function CoachInRoom() {
                   {typing && (
                     <motion.div
                       key="typing"
-                      initial={{ opacity: 0, y: 10 }}
+                      initial={{ opacity: 0, y: 12 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0 }}
                       transition={{ duration: 0.25 }}
                       className="flex items-end gap-2"
                     >
-                      <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md border-2 border-ink bg-flare text-[9px] font-black text-paper">
+                      <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-violet to-cyan text-[9px] font-black text-white">
                         OPA
                       </div>
-                      <div className="flex items-center gap-1 rounded-xl rounded-bl-sm border-2 border-ink bg-flare/12 px-4 py-4">
+                      <div className="flex items-center gap-1 rounded-2xl rounded-bl-md border border-violet/30 bg-violet/10 px-4 py-4">
                         {[0, 1, 2].map((d) => (
                           <span
                             key={d}
-                            className="typing-dot h-2 w-2 rounded-full bg-flare"
+                            className="typing-dot h-2 w-2 rounded-full bg-gradient-to-r from-violet to-cyan"
                             style={{ animationDelay: `${d * 0.15}s` }}
                           />
                         ))}
@@ -321,25 +317,25 @@ export default function CoachInRoom() {
               </div>
 
               {/* Outcome footer */}
-              <div className="border-t-2 border-ink bg-bone px-5 py-4 md:px-6">
+              <div className="border-t border-white/10 bg-white/[0.03] px-5 py-4 md:px-6">
                 <div className="flex items-center justify-center gap-2 text-center">
                   <span
-                    className={`flex h-5 w-5 shrink-0 items-center justify-center rounded border-2 transition-colors duration-500 ${
+                    className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full transition-all duration-500 ${
                       finished
-                        ? "border-ink bg-go"
-                        : "border-ink-faint/40 bg-transparent"
+                        ? "bg-gradient-to-br from-violet to-cyan"
+                        : "border border-white/15 bg-transparent"
                     }`}
                   >
                     <Check
                       className={`h-3 w-3 transition-colors duration-500 ${
-                        finished ? "text-paper" : "text-ink-faint/40"
+                        finished ? "text-white" : "text-ink-faint"
                       }`}
                       strokeWidth={3.5}
                     />
                   </span>
                   <span
-                    className={`text-sm font-medium italic transition-colors duration-500 ${
-                      finished ? "text-ink" : "text-ink-faint/50"
+                    className={`text-sm italic transition-colors duration-500 ${
+                      finished ? "text-ink" : "text-ink-faint"
                     }`}
                   >
                     {conv.footer}
@@ -348,16 +344,16 @@ export default function CoachInRoom() {
               </div>
             </div>
           </div>
-        </FadeIn>
+        </Reveal>
 
-        <FadeIn delay={0.1}>
+        <Reveal delay={0.1}>
           <p className="mx-auto mt-20 max-w-3xl text-center font-display text-2xl font-bold text-ink md:text-3xl">
             This is what you get for $49. A protocol, plus a Coach who knows it.
           </p>
-          <p className="mt-4 text-center font-mono text-sm uppercase tracking-wide text-ink-faint">
+          <p className="mt-4 text-center text-sm uppercase tracking-wide text-ink-faint">
             Free Claude or ChatGPT. The Master Prompt. The 14 days. Done.
           </p>
-        </FadeIn>
+        </Reveal>
       </div>
     </section>
   );

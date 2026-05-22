@@ -1,8 +1,8 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { BookOpen, Bot, FileText, CheckCircle } from "lucide-react";
-import FadeIn from "./ui/FadeIn";
+import Reveal from "./ui/Reveal";
+import TiltCard from "./ui/TiltCard";
 import SectionLabel from "./ui/SectionLabel";
 
 const cards = [
@@ -32,59 +32,47 @@ export default function WhatYouGet() {
   return (
     <section
       id="what-you-get"
-      className="relative scroll-mt-24 border-t-2 border-ink bg-bone px-6 py-24 md:px-8 md:py-28 lg:py-32"
+      className="relative scroll-mt-24 px-6 py-28 md:px-8 md:py-36"
     >
       <div className="mx-auto max-w-7xl">
         <div className="mx-auto max-w-3xl text-center">
-          <FadeIn>
+          <Reveal>
             <SectionLabel>Included</SectionLabel>
+          </Reveal>
+          <Reveal delay={0.05}>
             <h2 className="mt-6 font-display text-4xl font-extrabold tracking-tight text-ink md:text-5xl">
-              Everything you need. Nothing you don’t.
+              Everything you need.{" "}
+              <span className="text-gradient">Nothing you don’t.</span>
             </h2>
-          </FadeIn>
+          </Reveal>
         </div>
 
-        <motion.div
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.2 }}
-          variants={{ show: { transition: { staggerChildren: 0.1 } } }}
-          className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4"
-        >
+        <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {cards.map(({ Icon, title, body }, i) => (
-            <motion.div
-              key={title}
-              variants={{
-                hidden: { opacity: 0, y: 24 },
-                show: {
-                  opacity: 1,
-                  y: 0,
-                  transition: { duration: 0.5, ease: "easeOut" },
-                },
-              }}
-              className="flex flex-col rounded-xl border-2 border-ink bg-card p-7 shadow-brut transition-all duration-150 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-brut-md"
-            >
-              <div className="flex items-center justify-between">
-                <div className="inline-flex h-12 w-12 items-center justify-center rounded-lg border-2 border-ink bg-flare">
-                  <Icon className="h-5 w-5 text-paper" strokeWidth={2.25} />
+            <Reveal key={title} delay={i * 0.1}>
+              <TiltCard className="glass border-glow flex h-full flex-col rounded-3xl p-7">
+                <div className="flex items-center justify-between">
+                  <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-violet via-indigo to-cyan shadow-[0_8px_24px_-8px_rgba(139,92,246,0.9)]">
+                    <Icon className="h-5 w-5 text-white" strokeWidth={2.25} />
+                  </div>
+                  <span className="font-display text-sm font-bold text-ink-faint">
+                    0{i + 1}
+                  </span>
                 </div>
-                <span className="font-mono text-xs font-bold text-ink-faint">
-                  0{i + 1}
-                </span>
-              </div>
-              <h3 className="mt-5 font-display text-xl font-extrabold text-ink">
-                {title}
-              </h3>
-              <p className="mt-3 leading-relaxed text-ink-soft">{body}</p>
-            </motion.div>
+                <h3 className="mt-5 font-display text-xl font-extrabold text-ink">
+                  {title}
+                </h3>
+                <p className="mt-3 leading-relaxed text-ink-muted">{body}</p>
+              </TiltCard>
+            </Reveal>
           ))}
-        </motion.div>
+        </div>
 
-        <FadeIn delay={0.1}>
-          <p className="mt-12 text-center font-mono text-sm uppercase tracking-wide text-ink-faint">
+        <Reveal delay={0.1}>
+          <p className="mt-12 text-center text-sm uppercase tracking-wide text-ink-faint">
             Delivered as a Notion portal. Lifetime access. One-time payment.
           </p>
-        </FadeIn>
+        </Reveal>
       </div>
     </section>
   );

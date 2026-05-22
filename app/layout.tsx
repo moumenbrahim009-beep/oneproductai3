@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Inter, Inter_Tight } from "next/font/google";
 import "./globals.css";
+import Aurora from "./components/ui/Aurora";
+import ScrollProgress from "./components/ui/ScrollProgress";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -35,7 +37,11 @@ export default function RootLayout({
       lang="en"
       className={`${inter.variable} ${interTight.variable} antialiased`}
     >
-      <body className="bg-paper text-ink antialiased">{children}</body>
+      <body className="bg-base text-ink antialiased">
+        <Aurora />
+        <ScrollProgress />
+        {children}
+      </body>
     </html>
   );
 }

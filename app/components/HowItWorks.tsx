@@ -1,7 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
-import FadeIn from "./ui/FadeIn";
+import Reveal from "./ui/Reveal";
+import TiltCard from "./ui/TiltCard";
 import SectionLabel from "./ui/SectionLabel";
 
 const phases = [
@@ -42,54 +42,52 @@ export default function HowItWorks() {
   return (
     <section
       id="how-it-works"
-      className="relative scroll-mt-24 border-t-2 border-ink bg-bone px-6 py-24 md:px-8 md:py-28 lg:py-32"
+      className="relative scroll-mt-24 px-6 py-28 md:px-8 md:py-36"
     >
       <div className="mx-auto max-w-7xl">
         <div className="mx-auto max-w-3xl text-center">
-          <FadeIn>
+          <Reveal>
             <SectionLabel>The Protocol</SectionLabel>
+          </Reveal>
+          <Reveal delay={0.05}>
             <h2 className="mt-6 font-display text-4xl font-extrabold tracking-tight text-ink md:text-5xl">
-              Three phases. Fourteen days. One product live.
+              Three phases. Fourteen days.{" "}
+              <span className="text-gradient">One product live.</span>
             </h2>
-          </FadeIn>
+          </Reveal>
         </div>
 
         <div className="mt-16 grid gap-6 lg:grid-cols-3">
           {phases.map((phase, i) => (
-            <motion.div
-              key={phase.num}
-              initial={{ opacity: 0, y: 28 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.55, ease: "easeOut", delay: i * 0.12 }}
-              className="flex flex-col rounded-xl border-2 border-ink bg-card p-8 shadow-brut transition-all duration-150 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-brut-md"
-            >
-              <div className="flex items-center justify-between">
-                <span className="font-display text-6xl font-black leading-none text-ink">
-                  {phase.num}
-                </span>
-                <span className="rounded-md border-2 border-ink bg-flare px-2.5 py-1 font-mono text-xs font-bold uppercase tracking-wider text-paper">
-                  {phase.days}
-                </span>
-              </div>
-              <h3 className="mt-5 font-display text-2xl font-extrabold text-ink">
-                {phase.name}
-              </h3>
-              <p className="mt-3 leading-relaxed text-ink-soft">
-                {phase.description}
-              </p>
-              <ul className="mt-6 space-y-2 border-t-2 border-ink/15 pt-6">
-                {phase.points.map((p) => (
-                  <li
-                    key={p}
-                    className="flex items-center gap-3 text-sm text-ink-soft"
-                  >
-                    <span className="h-2.5 w-2.5 shrink-0 bg-flare" />
-                    {p}
-                  </li>
-                ))}
-              </ul>
-            </motion.div>
+            <Reveal key={phase.num} delay={i * 0.12}>
+              <TiltCard className="glass border-glow flex h-full flex-col rounded-3xl p-8">
+                <div className="flex items-center justify-between">
+                  <span className="font-display text-6xl font-black leading-none text-gradient">
+                    {phase.num}
+                  </span>
+                  <span className="glass rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-wider text-ink-muted">
+                    {phase.days}
+                  </span>
+                </div>
+                <h3 className="mt-6 font-display text-2xl font-extrabold text-ink">
+                  {phase.name}
+                </h3>
+                <p className="mt-3 leading-relaxed text-ink-muted">
+                  {phase.description}
+                </p>
+                <ul className="mt-6 space-y-2.5 border-t border-white/10 pt-6">
+                  {phase.points.map((p) => (
+                    <li
+                      key={p}
+                      className="flex items-center gap-3 text-sm text-ink-muted"
+                    >
+                      <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-gradient-to-r from-violet to-cyan" />
+                      {p}
+                    </li>
+                  ))}
+                </ul>
+              </TiltCard>
+            </Reveal>
           ))}
         </div>
       </div>

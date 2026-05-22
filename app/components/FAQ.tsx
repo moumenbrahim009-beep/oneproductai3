@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Plus } from "lucide-react";
-import FadeIn from "./ui/FadeIn";
+import Reveal from "./ui/Reveal";
 import SectionLabel from "./ui/SectionLabel";
 
 const faqs = [
@@ -53,29 +53,30 @@ export default function FAQ() {
   const [open, setOpen] = useState<number | null>(0);
 
   return (
-    <section
-      id="faq"
-      className="relative scroll-mt-24 border-t-2 border-ink bg-bone px-6 py-24 md:px-8 md:py-28 lg:py-32"
-    >
+    <section id="faq" className="relative scroll-mt-24 px-6 py-28 md:px-8 md:py-36">
       <div className="mx-auto max-w-3xl">
         <div className="text-center">
-          <FadeIn>
+          <Reveal>
             <SectionLabel>Questions</SectionLabel>
+          </Reveal>
+          <Reveal delay={0.05}>
             <h2 className="mt-6 font-display text-4xl font-extrabold tracking-tight text-ink md:text-5xl">
               Things people ask.
             </h2>
-          </FadeIn>
+          </Reveal>
         </div>
 
-        <FadeIn delay={0.1} className="mt-14">
+        <Reveal delay={0.1} className="mt-14">
           <div className="space-y-3">
             {faqs.map((faq, i) => {
               const isOpen = open === i;
               return (
                 <div
                   key={i}
-                  className={`rounded-xl border-2 border-ink bg-card transition-shadow ${
-                    isOpen ? "shadow-brut" : ""
+                  className={`overflow-hidden rounded-2xl border transition-colors duration-300 ${
+                    isOpen
+                      ? "glass border-violet/30"
+                      : "border-white/8 bg-white/[0.02] hover:bg-white/[0.04]"
                   }`}
                 >
                   <button
@@ -87,14 +88,14 @@ export default function FAQ() {
                       {faq.q}
                     </span>
                     <span
-                      className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-md border-2 border-ink transition-all duration-200 ${
-                        isOpen ? "rotate-45 bg-flare" : "bg-card"
+                      className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full transition-all duration-300 ${
+                        isOpen
+                          ? "rotate-45 bg-gradient-to-br from-violet to-cyan"
+                          : "bg-white/5"
                       }`}
                     >
                       <Plus
-                        className={`h-4 w-4 ${
-                          isOpen ? "text-paper" : "text-ink"
-                        }`}
+                        className={`h-4 w-4 ${isOpen ? "text-white" : "text-ink-muted"}`}
                         strokeWidth={3}
                       />
                     </span>
@@ -108,7 +109,7 @@ export default function FAQ() {
                         transition={{ duration: 0.3, ease: "easeOut" }}
                         className="overflow-hidden"
                       >
-                        <p className="px-5 pb-5 leading-relaxed text-ink-soft">
+                        <p className="px-5 pb-5 leading-relaxed text-ink-muted">
                           {faq.a}
                         </p>
                       </motion.div>
@@ -118,7 +119,7 @@ export default function FAQ() {
               );
             })}
           </div>
-        </FadeIn>
+        </Reveal>
       </div>
     </section>
   );
