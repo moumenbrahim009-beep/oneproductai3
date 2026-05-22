@@ -1,50 +1,34 @@
 @import "tailwindcss";
 
 :root {
-  /* Backgrounds */
-  --bg-primary: #0a0a0f;
-  --bg-secondary: #12121a;
-  --bg-tertiary: #1a1a24;
+  /* Canvas */
+  --paper: #f2eee4; /* warm primary canvas */
+  --bone: #e8e2d4; /* alternating section bg */
+  --card: #fbfaf6; /* card surface, warm near-white */
 
-  /* Text */
-  --text-primary: #fafafa;
-  --text-secondary: #a1a1aa;
-  --text-tertiary: #71717a;
+  /* Ink */
+  --ink: #17140f; /* near-black, warm */
+  --ink-soft: #514a3d; /* secondary text */
+  --ink-faint: #8b8474; /* tertiary text */
 
-  /* Solid accents */
-  --accent-purple: #8b5cf6;
-  --accent-indigo: #6366f1;
-  --accent-blue: #3b82f6;
-
-  /* Borders */
-  --border-subtle: rgba(255, 255, 255, 0.06);
-  --border-medium: rgba(255, 255, 255, 0.1);
-  --border-strong: rgba(255, 255, 255, 0.16);
-
-  /* States */
-  --success: #10b981;
-  --warning: #f59e0b;
+  /* Signal */
+  --flare: #ff4a1c; /* ignition orange-red */
+  --flare-deep: #d83a11; /* hover/pressed flare */
+  --go: #1c7a47; /* "done" green */
 }
 
 @theme inline {
-  --color-bg-primary: var(--bg-primary);
-  --color-bg-secondary: var(--bg-secondary);
-  --color-bg-tertiary: var(--bg-tertiary);
+  --color-paper: var(--paper);
+  --color-bone: var(--bone);
+  --color-card: var(--card);
 
-  --color-text-primary: var(--text-primary);
-  --color-text-secondary: var(--text-secondary);
-  --color-text-tertiary: var(--text-tertiary);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-ink-faint: var(--ink-faint);
 
-  --color-accent-purple: var(--accent-purple);
-  --color-accent-indigo: var(--accent-indigo);
-  --color-accent-blue: var(--accent-blue);
-
-  --color-border-subtle: var(--border-subtle);
-  --color-border-medium: var(--border-medium);
-  --color-border-strong: var(--border-strong);
-
-  --color-success: var(--success);
-  --color-warning: var(--warning);
+  --color-flare: var(--flare);
+  --color-flare-deep: var(--flare-deep);
+  --color-go: var(--go);
 
   --font-sans: var(--font-inter);
   --font-display: var(--font-inter-tight);
@@ -55,108 +39,49 @@ html {
 }
 
 body {
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
+  background-color: var(--paper);
+  color: var(--ink);
   font-family: var(--font-inter), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
 
-/* The signature gradient — purple -> indigo -> blue */
-.gradient-text {
+/* Brutalist hard offset shadows (no blur) */
+.shadow-brut {
+  box-shadow: 4px 4px 0 0 var(--ink);
+}
+.shadow-brut-md {
+  box-shadow: 6px 6px 0 0 var(--ink);
+}
+.shadow-brut-lg {
+  box-shadow: 9px 9px 0 0 var(--ink);
+}
+.shadow-brut-flare {
+  box-shadow: 6px 6px 0 0 var(--flare);
+}
+
+/* Engineering graph-paper grid */
+.grid-paper {
   background-image: linear-gradient(
-    135deg,
-    #8b5cf6 0%,
-    #6366f1 50%,
-    #3b82f6 100%
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+      to right,
+      rgba(23, 20, 15, 0.07) 1px,
+      transparent 1px
+    ),
+    linear-gradient(to bottom, rgba(23, 20, 15, 0.07) 1px, transparent 1px);
+  background-size: 34px 34px;
 }
 
-.gradient-bg {
-  background-image: linear-gradient(
-    135deg,
-    #8b5cf6 0%,
-    #6366f1 50%,
-    #3b82f6 100%
-  );
-}
-
-/* Subtle dot-grid background pattern */
-.dot-grid {
-  background-image: radial-gradient(
-    rgba(255, 255, 255, 0.07) 1px,
-    transparent 1px
-  );
-  background-size: 28px 28px;
-}
-
-/* Animated gradient line for the timeline */
-.timeline-line {
-  background: linear-gradient(
-    90deg,
-    #8b5cf6,
-    #6366f1,
-    #3b82f6,
-    #8b5cf6
-  );
-  background-size: 300% 100%;
-  animation: flow 6s linear infinite;
-}
-
-@keyframes flow {
-  0% {
-    background-position: 0% 50%;
+/* Scrolling ticker for the closing band */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
   }
-  100% {
-    background-position: 300% 50%;
+  to {
+    transform: translateX(-50%);
   }
 }
-
-/* Slow drift for hero orbs */
-@keyframes drift-a {
-  0%,
-  100% {
-    transform: translate(0, 0);
-  }
-  50% {
-    transform: translate(40px, 30px);
-  }
-}
-
-@keyframes drift-b {
-  0%,
-  100% {
-    transform: translate(0, 0);
-  }
-  50% {
-    transform: translate(-40px, -30px);
-  }
-}
-
-.orb-drift-a {
-  animation: drift-a 16s ease-in-out infinite;
-}
-
-.orb-drift-b {
-  animation: drift-b 18s ease-in-out infinite;
-}
-
-/* Guarantee badge pulse */
-@keyframes glow-pulse {
-  0%,
-  100% {
-    box-shadow: 0 0 40px rgba(139, 92, 246, 0.25);
-  }
-  50% {
-    box-shadow: 0 0 70px rgba(139, 92, 246, 0.5);
-  }
-}
-
-.glow-pulse {
-  animation: glow-pulse 4s ease-in-out infinite;
+.marquee {
+  animation: marquee 22s linear infinite;
 }
 
 /* Typing indicator dots */
@@ -165,27 +90,28 @@ body {
   60%,
   100% {
     transform: translateY(0);
-    opacity: 0.4;
+    opacity: 0.35;
   }
   30% {
     transform: translateY(-4px);
     opacity: 1;
   }
 }
-
 .typing-dot {
   animation: typing-bounce 1.2s ease-in-out infinite;
 }
 
 ::selection {
-  background-color: rgba(139, 92, 246, 0.35);
-  color: #fafafa;
+  background-color: var(--flare);
+  color: var(--paper);
 }
 
-/* Respect reduced-motion preference */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+  .marquee {
+    animation: none !important;
   }
   *,
   *::before,

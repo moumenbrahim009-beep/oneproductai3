@@ -1,38 +1,35 @@
-"use client";
-
 import Link from "next/link";
-import { motion } from "framer-motion";
 import type { ReactNode } from "react";
 
 const sizes = {
-  md: "px-6 py-3 text-base",
-  lg: "px-8 py-4 text-lg",
+  md: "px-5 py-2.5 text-sm",
+  lg: "px-8 py-4 text-base",
 };
 
 export default function Button({
   children,
   href = "/checkout",
   size = "md",
+  variant = "flare",
   className = "",
 }: {
   children: ReactNode;
   href?: string;
   size?: keyof typeof sizes;
+  variant?: "flare" | "paper";
   className?: string;
 }) {
+  const palette =
+    variant === "paper"
+      ? "bg-card text-ink hover:bg-paper"
+      : "bg-flare text-paper hover:bg-flare-deep";
+
   return (
-    <motion.div
-      whileHover={{ scale: 1.02 }}
-      whileTap={{ scale: 0.98 }}
-      transition={{ duration: 0.2, ease: "easeOut" }}
-      className={`inline-block ${className}`}
+    <Link
+      href={href}
+      className={`inline-flex items-center justify-center gap-2 rounded-lg border-2 border-ink font-display font-bold uppercase tracking-wide shadow-brut transition-all duration-150 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-brut-md active:translate-x-0 active:translate-y-0 active:shadow-none focus:outline-none focus-visible:ring-4 focus-visible:ring-flare/40 ${palette} ${sizes[size]} ${className}`}
     >
-      <Link
-        href={href}
-        className={`gradient-bg group inline-flex items-center justify-center rounded-full font-semibold text-white shadow-[0_0_40px_rgba(139,92,246,0.3)] transition-shadow duration-300 hover:shadow-[0_0_60px_rgba(139,92,246,0.55)] focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-purple focus-visible:ring-offset-2 focus-visible:ring-offset-bg-primary ${sizes[size]}`}
-      >
-        {children}
-      </Link>
-    </motion.div>
+      {children}
+    </Link>
   );
 }

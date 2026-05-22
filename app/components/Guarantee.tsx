@@ -6,18 +6,17 @@ import SectionLabel from "./ui/SectionLabel";
 
 export default function Guarantee() {
   return (
-    <section className="relative px-6 py-24 md:px-8 md:py-32 lg:py-40">
+    <section className="relative border-t-2 border-ink px-6 py-24 md:px-8 md:py-28 lg:py-32">
       <div className="mx-auto max-w-5xl">
         <FadeIn>
-          <div className="relative overflow-hidden rounded-3xl bg-bg-secondary p-10 md:p-14">
-            <div className="gradient-bg pointer-events-none absolute inset-0 rounded-3xl p-px [mask:linear-gradient(#000_0_0)_content-box,linear-gradient(#000_0_0)] [mask-composite:exclude]" />
-            <div className="relative grid items-center gap-12 md:grid-cols-2">
+          <div className="rounded-2xl border-2 border-ink bg-card p-10 shadow-brut-lg md:p-14">
+            <div className="grid items-center gap-12 md:grid-cols-2">
               <div>
                 <SectionLabel>The Promise</SectionLabel>
-                <h2 className="mt-5 text-4xl font-bold tracking-tight text-text-primary">
+                <h2 className="mt-6 font-display text-4xl font-extrabold tracking-tight text-ink">
                   14 days or your money back.
                 </h2>
-                <p className="mt-6 leading-relaxed text-text-secondary">
+                <p className="mt-6 leading-relaxed text-ink-soft">
                   If you follow the protocol and don’t have a product live by
                   Day 14, request a full refund. No forms. No interrogation.
                   Just email us within 30 days of purchase and the $49 is
@@ -26,10 +25,13 @@ export default function Guarantee() {
               </div>
 
               <div className="flex flex-col items-center text-center">
-                <div className="glow-pulse gradient-bg flex h-28 w-28 items-center justify-center rounded-full">
-                  <ShieldCheck className="h-14 w-14 text-white" strokeWidth={1.5} />
+                <div className="flex h-28 w-28 items-center justify-center rounded-2xl border-2 border-ink bg-flare shadow-brut">
+                  <ShieldCheck
+                    className="h-14 w-14 text-paper"
+                    strokeWidth={1.75}
+                  />
                 </div>
-                <p className="mt-6 text-lg font-medium text-text-primary">
+                <p className="mt-6 font-mono text-sm font-semibold uppercase tracking-wide text-ink">
                   $49 · 14-day refund · Lifetime access
                 </p>
               </div>

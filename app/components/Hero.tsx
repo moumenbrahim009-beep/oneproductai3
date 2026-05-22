@@ -1,34 +1,36 @@
 "use client";
 
 import { motion, type Variants } from "framer-motion";
+import { ArrowRight } from "lucide-react";
 import Button from "./ui/Button";
 import GradientText from "./ui/GradientText";
 
 const container: Variants = {
   hidden: {},
   show: {
-    transition: { staggerChildren: 0.12, delayChildren: 0.1 },
+    transition: { staggerChildren: 0.1, delayChildren: 0.05 },
   },
 };
 
 const item: Variants = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
+  hidden: { opacity: 0, y: 18 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.55, ease: "easeOut" } },
 };
+
+const stats = [
+  { value: "$49", label: "one-time" },
+  { value: "14", label: "days" },
+  { value: "1", label: "product live" },
+];
 
 export default function Hero() {
   return (
     <section
       id="top"
-      className="relative flex min-h-screen items-center justify-center overflow-hidden px-6"
+      className="relative flex min-h-screen items-center justify-center overflow-hidden px-6 pt-24"
     >
-      {/* Background orbs */}
-      <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="orb-drift-a absolute -left-32 -top-32 h-[32rem] w-[32rem] rounded-full bg-accent-purple/25 blur-[120px]" />
-        <div className="orb-drift-b absolute -bottom-40 -right-32 h-[34rem] w-[34rem] rounded-full bg-accent-blue/25 blur-[120px]" />
-      </div>
-      {/* Dot grid */}
-      <div className="dot-grid pointer-events-none absolute inset-0 opacity-60 [mask-image:radial-gradient(ellipse_at_center,black,transparent_75%)]" />
+      {/* Graph-paper canvas */}
+      <div className="grid-paper pointer-events-none absolute inset-0 [mask-image:radial-gradient(ellipse_at_center,black,transparent_80%)]" />
 
       <motion.div
         variants={container}
@@ -37,14 +39,15 @@ export default function Hero() {
         className="relative z-10 mx-auto flex max-w-4xl flex-col items-center text-center"
       >
         <motion.div variants={item}>
-          <span className="gradient-text text-sm font-semibold uppercase tracking-widest opacity-80">
+          <span className="inline-flex items-center gap-2 rounded-md border-2 border-ink bg-card px-3 py-1.5 font-mono text-xs font-semibold uppercase tracking-[0.16em] text-ink shadow-brut">
+            <span className="h-2 w-2 bg-flare" />
             The One Product Launch Engine™
           </span>
         </motion.div>
 
         <motion.h1
           variants={item}
-          className="mt-6 text-6xl font-extrabold leading-none tracking-tight text-text-primary md:text-7xl lg:text-8xl"
+          className="mt-7 font-display text-6xl font-extrabold leading-[0.95] tracking-tight text-ink md:text-7xl lg:text-8xl"
         >
           Launch your first
           <br />
@@ -53,24 +56,43 @@ export default function Hero() {
 
         <motion.p
           variants={item}
-          className="mt-8 max-w-2xl text-xl leading-relaxed text-text-secondary"
+          className="mt-8 max-w-2xl text-lg leading-relaxed text-ink-soft md:text-xl"
         >
           A complete, AI-guided protocol that takes you from idea to live
           product. No fluff. No theory. Just the engine.
         </motion.p>
 
-        <motion.div variants={item} className="mt-10 flex flex-col items-center">
+        <motion.div
+          variants={item}
+          className="mt-10 flex flex-col items-center gap-4"
+        >
           <Button href="/checkout" size="lg">
             Get Started — $49
+            <ArrowRight className="h-5 w-5" />
           </Button>
-          <p className="mt-4 text-sm text-text-tertiary">
+          <p className="font-mono text-xs uppercase tracking-wider text-ink-faint">
             One-time payment · 14-day money-back guarantee
           </p>
         </motion.div>
 
-        <motion.p variants={item} className="mt-10 text-sm text-text-tertiary">
-          Used by creators who actually ship.
-        </motion.p>
+        <motion.div
+          variants={item}
+          className="mt-14 grid w-full max-w-md grid-cols-3 gap-3"
+        >
+          {stats.map((s) => (
+            <div
+              key={s.label}
+              className="rounded-lg border-2 border-ink bg-card px-3 py-4 shadow-brut"
+            >
+              <div className="font-display text-3xl font-extrabold text-flare">
+                {s.value}
+              </div>
+              <div className="mt-1 font-mono text-[10px] uppercase tracking-widest text-ink-faint">
+                {s.label}
+              </div>
+            </div>
+          ))}
+        </motion.div>
       </motion.div>
     </section>
   );

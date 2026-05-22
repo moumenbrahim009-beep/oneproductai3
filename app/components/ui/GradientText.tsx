@@ -9,5 +9,9 @@ export default function GradientText({
   as?: ElementType;
   className?: string;
 }) {
-  return <Tag className={`gradient-text ${className}`}>{children}</Tag>;
+  return (
+    <Tag className={`relative whitespace-nowrap text-flare ${className}`}>
+      {children}
+    </Tag>
+  );
 }

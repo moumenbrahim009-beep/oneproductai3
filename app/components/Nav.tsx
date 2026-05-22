@@ -22,17 +22,20 @@ export default function Nav() {
 
   return (
     <nav
-      className={`fixed inset-x-0 top-0 z-50 transition-colors duration-300 ${
+      className={`fixed inset-x-0 top-0 z-50 transition-all duration-200 ${
         scrolled
-          ? "border-b border-border-subtle bg-bg-primary/70 backdrop-blur-xl"
-          : "border-b border-transparent bg-transparent"
+          ? "border-b-2 border-ink bg-paper/90 backdrop-blur-md"
+          : "border-b-2 border-transparent bg-transparent"
       }`}
     >
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 md:px-8">
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-3.5 md:px-8">
         <Link
           href="#top"
-          className="text-lg font-semibold tracking-tight text-text-primary"
+          className="flex items-center gap-2 font-display text-lg font-extrabold tracking-tight text-ink"
         >
+          <span className="flex h-7 w-7 items-center justify-center rounded-md border-2 border-ink bg-flare text-sm font-black text-paper">
+            1
+          </span>
           One Product AI
         </Link>
 
@@ -41,14 +44,14 @@ export default function Nav() {
             <a
               key={link.href}
               href={link.href}
-              className="text-sm text-text-secondary transition-colors hover:text-text-primary"
+              className="font-mono text-xs font-semibold uppercase tracking-[0.14em] text-ink-soft transition-colors hover:text-flare"
             >
               {link.label}
             </a>
           ))}
         </div>
 
-        <Button href="/checkout" size="md" className="text-sm">
+        <Button href="/checkout" size="md" className="text-xs">
           Get Started — $49
         </Button>
       </div>

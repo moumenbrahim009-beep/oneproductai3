@@ -26,12 +26,12 @@ export default function Timeline() {
   const [active, setActive] = useState<number | null>(null);
 
   return (
-    <section className="relative bg-[#08080d] px-6 py-24 md:px-8 md:py-32 lg:py-40">
+    <section className="relative border-t-2 border-ink px-6 py-24 md:px-8 md:py-28 lg:py-32">
       <div className="mx-auto max-w-7xl">
         <div className="mx-auto max-w-3xl text-center">
           <FadeIn>
             <SectionLabel>The Path</SectionLabel>
-            <h2 className="mt-5 text-4xl font-bold tracking-tight text-text-primary md:text-5xl">
+            <h2 className="mt-6 font-display text-4xl font-extrabold tracking-tight text-ink md:text-5xl">
               Day by day. No guesswork.
             </h2>
           </FadeIn>
@@ -40,7 +40,7 @@ export default function Timeline() {
         {/* Desktop: horizontal */}
         <FadeIn className="mt-20 hidden lg:block" delay={0.1}>
           <div className="relative">
-            <div className="timeline-line absolute left-0 right-0 top-3 h-px" />
+            <div className="absolute left-0 right-0 top-2 h-0.5 bg-ink" />
             <div className="relative flex justify-between">
               {days.map((objective, i) => (
                 <div
@@ -50,20 +50,20 @@ export default function Timeline() {
                   onMouseLeave={() => setActive(null)}
                 >
                   <span
-                    className={`h-3 w-3 rounded-full ring-4 ring-[#08080d] transition-all duration-300 ${
+                    className={`h-4 w-4 border-2 border-ink transition-all duration-200 ${
                       active === i
-                        ? "gradient-bg scale-125"
-                        : "bg-border-strong group-hover:bg-accent-purple"
+                        ? "scale-125 bg-flare"
+                        : "bg-card group-hover:bg-flare"
                     }`}
                   />
-                  <span className="mt-4 text-xs font-semibold text-text-tertiary">
+                  <span className="mt-4 font-mono text-[11px] font-bold uppercase tracking-wide text-ink-faint">
                     Day {i + 1}
                   </span>
                   <span
-                    className={`mt-2 max-w-[7rem] text-center text-xs leading-snug transition-opacity duration-300 ${
+                    className={`mt-2 max-w-[7rem] text-center text-xs font-medium leading-snug transition-opacity duration-200 ${
                       active === i
-                        ? "text-text-secondary opacity-100"
-                        : "text-text-tertiary opacity-0 group-hover:opacity-100"
+                        ? "text-ink opacity-100"
+                        : "text-ink-soft opacity-0 group-hover:opacity-100"
                     }`}
                   >
                     {objective}
@@ -76,7 +76,7 @@ export default function Timeline() {
 
         {/* Mobile / tablet: vertical */}
         <div className="relative mt-14 lg:hidden">
-          <div className="timeline-line absolute bottom-0 left-[5px] top-0 w-px" />
+          <div className="absolute bottom-0 left-[7px] top-0 w-0.5 bg-ink" />
           <div className="space-y-6">
             {days.map((objective, i) => (
               <motion.div
@@ -85,14 +85,14 @@ export default function Timeline() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, amount: 0.4 }}
                 transition={{ duration: 0.4, ease: "easeOut" }}
-                className="relative flex items-start gap-5 pl-1"
+                className="relative flex items-start gap-5"
               >
-                <span className="gradient-bg mt-1.5 h-3 w-3 shrink-0 rounded-full ring-4 ring-[#08080d]" />
+                <span className="mt-1 h-4 w-4 shrink-0 border-2 border-ink bg-flare" />
                 <div>
-                  <div className="text-xs font-semibold uppercase tracking-widest text-text-tertiary">
+                  <div className="font-mono text-[11px] font-bold uppercase tracking-widest text-ink-faint">
                     Day {i + 1}
                   </div>
-                  <div className="mt-1 text-text-primary">{objective}</div>
+                  <div className="mt-1 font-medium text-ink">{objective}</div>
                 </div>
               </motion.div>
             ))}
@@ -100,7 +100,7 @@ export default function Timeline() {
         </div>
 
         <FadeIn delay={0.1}>
-          <p className="mx-auto mt-16 max-w-2xl text-center text-lg text-text-secondary">
+          <p className="mx-auto mt-16 max-w-2xl text-center font-display text-xl font-bold text-ink">
             The timeline ends. Your product begins.
           </p>
         </FadeIn>

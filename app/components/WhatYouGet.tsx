@@ -32,13 +32,13 @@ export default function WhatYouGet() {
   return (
     <section
       id="what-you-get"
-      className="relative px-6 py-24 md:px-8 md:py-32 lg:py-40"
+      className="relative scroll-mt-24 border-t-2 border-ink bg-bone px-6 py-24 md:px-8 md:py-28 lg:py-32"
     >
       <div className="mx-auto max-w-7xl">
         <div className="mx-auto max-w-3xl text-center">
           <FadeIn>
             <SectionLabel>Included</SectionLabel>
-            <h2 className="mt-5 text-4xl font-bold tracking-tight text-text-primary md:text-5xl">
+            <h2 className="mt-6 font-display text-4xl font-extrabold tracking-tight text-ink md:text-5xl">
               Everything you need. Nothing you don’t.
             </h2>
           </FadeIn>
@@ -51,7 +51,7 @@ export default function WhatYouGet() {
           variants={{ show: { transition: { staggerChildren: 0.1 } } }}
           className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4"
         >
-          {cards.map(({ Icon, title, body }) => (
+          {cards.map(({ Icon, title, body }, i) => (
             <motion.div
               key={title}
               variants={{
@@ -59,25 +59,29 @@ export default function WhatYouGet() {
                 show: {
                   opacity: 1,
                   y: 0,
-                  transition: { duration: 0.6, ease: "easeOut" },
+                  transition: { duration: 0.5, ease: "easeOut" },
                 },
               }}
-              whileHover={{ y: -4 }}
-              className="rounded-2xl border border-border-subtle bg-bg-secondary p-7 transition-colors hover:border-border-medium"
+              className="flex flex-col rounded-xl border-2 border-ink bg-card p-7 shadow-brut transition-all duration-150 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-brut-md"
             >
-              <div className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-bg-tertiary">
-                <Icon className="h-5 w-5 text-accent-purple" />
+              <div className="flex items-center justify-between">
+                <div className="inline-flex h-12 w-12 items-center justify-center rounded-lg border-2 border-ink bg-flare">
+                  <Icon className="h-5 w-5 text-paper" strokeWidth={2.25} />
+                </div>
+                <span className="font-mono text-xs font-bold text-ink-faint">
+                  0{i + 1}
+                </span>
               </div>
-              <h3 className="mt-5 text-xl font-semibold text-text-primary">
+              <h3 className="mt-5 font-display text-xl font-extrabold text-ink">
                 {title}
               </h3>
-              <p className="mt-3 leading-relaxed text-text-secondary">{body}</p>
+              <p className="mt-3 leading-relaxed text-ink-soft">{body}</p>
             </motion.div>
           ))}
         </motion.div>
 
         <FadeIn delay={0.1}>
-          <p className="mt-12 text-center text-lg text-text-secondary">
+          <p className="mt-12 text-center font-mono text-sm uppercase tracking-wide text-ink-faint">
             Delivered as a Notion portal. Lifetime access. One-time payment.
           </p>
         </FadeIn>

@@ -42,13 +42,13 @@ export default function HowItWorks() {
   return (
     <section
       id="how-it-works"
-      className="relative bg-[#08080d] px-6 py-24 md:px-8 md:py-32 lg:py-40"
+      className="relative scroll-mt-24 border-t-2 border-ink bg-bone px-6 py-24 md:px-8 md:py-28 lg:py-32"
     >
       <div className="mx-auto max-w-7xl">
         <div className="mx-auto max-w-3xl text-center">
           <FadeIn>
             <SectionLabel>The Protocol</SectionLabel>
-            <h2 className="mt-5 text-4xl font-bold tracking-tight text-text-primary md:text-5xl">
+            <h2 className="mt-6 font-display text-4xl font-extrabold tracking-tight text-ink md:text-5xl">
               Three phases. Fourteen days. One product live.
             </h2>
           </FadeIn>
@@ -61,38 +61,30 @@ export default function HowItWorks() {
               initial={{ opacity: 0, y: 28 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.6, ease: "easeOut", delay: i * 0.12 }}
-              className="flex flex-col rounded-2xl border border-border-subtle bg-bg-secondary p-8"
+              transition={{ duration: 0.55, ease: "easeOut", delay: i * 0.12 }}
+              className="flex flex-col rounded-xl border-2 border-ink bg-card p-8 shadow-brut transition-all duration-150 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-brut-md"
             >
-              <motion.div
-                initial={{ scale: 0.6, opacity: 0 }}
-                whileInView={{ scale: 1, opacity: 1 }}
-                viewport={{ once: true, amount: 0.2 }}
-                transition={{
-                  duration: 0.5,
-                  ease: "easeOut",
-                  delay: i * 0.12 + 0.15,
-                }}
-                className="gradient-text text-6xl font-extrabold tracking-tight"
-              >
-                {phase.num}
-              </motion.div>
-              <h3 className="mt-4 text-2xl font-bold text-text-primary">
+              <div className="flex items-center justify-between">
+                <span className="font-display text-6xl font-black leading-none text-ink">
+                  {phase.num}
+                </span>
+                <span className="rounded-md border-2 border-ink bg-flare px-2.5 py-1 font-mono text-xs font-bold uppercase tracking-wider text-paper">
+                  {phase.days}
+                </span>
+              </div>
+              <h3 className="mt-5 font-display text-2xl font-extrabold text-ink">
                 {phase.name}
               </h3>
-              <div className="mt-1 text-sm font-semibold uppercase tracking-widest text-text-tertiary">
-                {phase.days}
-              </div>
-              <p className="mt-4 leading-relaxed text-text-secondary">
+              <p className="mt-3 leading-relaxed text-ink-soft">
                 {phase.description}
               </p>
-              <ul className="mt-6 space-y-2 border-t border-border-subtle pt-6">
+              <ul className="mt-6 space-y-2 border-t-2 border-ink/15 pt-6">
                 {phase.points.map((p) => (
                   <li
                     key={p}
-                    className="flex items-center gap-3 text-sm text-text-secondary"
+                    className="flex items-center gap-3 text-sm text-ink-soft"
                   >
-                    <span className="gradient-bg h-1.5 w-1.5 shrink-0 rounded-full" />
+                    <span className="h-2.5 w-2.5 shrink-0 bg-flare" />
                     {p}
                   </li>
                 ))}

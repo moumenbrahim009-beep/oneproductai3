@@ -45,9 +45,12 @@ export default function Chatbot() {
     });
   }, [messages, typing]);
 
-  useEffect(() => () => {
-    if (timer.current) clearTimeout(timer.current);
-  }, []);
+  useEffect(
+    () => () => {
+      if (timer.current) clearTimeout(timer.current);
+    },
+    [],
+  );
 
   const handleAsk = (item: { q: string; a: string }) => {
     if (typing || asked.includes(item.q)) return;
@@ -63,33 +66,33 @@ export default function Chatbot() {
   const remaining = qa.filter((item) => !asked.includes(item.q));
 
   return (
-    <section className="relative px-6 py-24 md:px-8 md:py-32 lg:py-40">
+    <section className="relative border-t-2 border-ink bg-bone px-6 py-24 md:px-8 md:py-28 lg:py-32">
       <div className="mx-auto max-w-7xl">
         <div className="mx-auto max-w-3xl text-center">
           <FadeIn>
             <SectionLabel>Have Questions?</SectionLabel>
-            <h2 className="mt-5 text-4xl font-bold tracking-tight text-text-primary md:text-5xl">
+            <h2 className="mt-6 font-display text-4xl font-extrabold tracking-tight text-ink md:text-5xl">
               Ask the engine.
             </h2>
-            <p className="mt-6 text-lg text-text-secondary">
+            <p className="mt-5 text-lg text-ink-soft">
               A taste of what it feels like to work with the protocol.
             </p>
           </FadeIn>
         </div>
 
         <FadeIn delay={0.1} className="mx-auto mt-12 max-w-2xl">
-          <div className="overflow-hidden rounded-2xl border border-border-medium bg-bg-secondary shadow-[0_0_60px_rgba(99,102,241,0.15)]">
+          <div className="overflow-hidden rounded-xl border-2 border-ink bg-card shadow-brut-lg">
             {/* Header */}
-            <div className="flex items-center gap-3 border-b border-border-subtle px-5 py-4">
-              <div className="gradient-bg flex h-9 w-9 items-center justify-center rounded-full text-sm font-bold text-white">
+            <div className="flex items-center gap-3 border-b-2 border-ink bg-paper px-5 py-4">
+              <div className="flex h-9 w-9 items-center justify-center rounded-lg border-2 border-ink bg-flare text-sm font-black text-paper">
                 AI
               </div>
               <div>
-                <div className="text-sm font-semibold text-text-primary">
+                <div className="font-display text-sm font-bold text-ink">
                   One Product AI
                 </div>
-                <div className="flex items-center gap-1.5 text-xs text-text-tertiary">
-                  <span className="h-2 w-2 rounded-full bg-success" />
+                <div className="flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-wide text-ink-faint">
+                  <span className="h-2 w-2 rounded-full bg-go" />
                   online
                 </div>
               </div>
@@ -98,7 +101,7 @@ export default function Chatbot() {
             {/* Messages */}
             <div
               ref={scrollRef}
-              className="flex h-80 flex-col gap-3 overflow-y-auto px-5 py-5"
+              className="flex h-80 flex-col gap-3 overflow-y-auto px-5 py-5 [scrollbar-width:thin]"
             >
               <AnimatePresence initial={false}>
                 {messages.map((m, i) => (
@@ -112,10 +115,10 @@ export default function Chatbot() {
                     }`}
                   >
                     <div
-                      className={`max-w-[80%] rounded-2xl px-4 py-3 text-sm leading-relaxed ${
+                      className={`max-w-[80%] break-words rounded-xl border-2 border-ink px-4 py-3 text-sm leading-relaxed ${
                         m.role === "user"
-                          ? "gradient-bg text-white"
-                          : "bg-bg-tertiary text-text-secondary"
+                          ? "rounded-br-sm bg-flare text-paper"
+                          : "rounded-bl-sm bg-bone text-ink"
                       }`}
                     >
                       {m.text}
@@ -130,11 +133,11 @@ export default function Chatbot() {
                     exit={{ opacity: 0 }}
                     className="flex justify-start"
                   >
-                    <div className="flex items-center gap-1 rounded-2xl bg-bg-tertiary px-4 py-3">
+                    <div className="flex items-center gap-1 rounded-xl rounded-bl-sm border-2 border-ink bg-bone px-4 py-4">
                       {[0, 1, 2].map((d) => (
                         <span
                           key={d}
-                          className="typing-dot h-2 w-2 rounded-full bg-text-tertiary"
+                          className="typing-dot h-2 w-2 rounded-full bg-flare"
                           style={{ animationDelay: `${d * 0.15}s` }}
                         />
                       ))}
@@ -145,20 +148,20 @@ export default function Chatbot() {
             </div>
 
             {/* Suggestion chips */}
-            <div className="flex flex-wrap gap-2 border-t border-border-subtle px-5 py-4">
+            <div className="flex flex-wrap gap-2 border-t-2 border-ink bg-paper px-5 py-4">
               {remaining.length > 0 ? (
                 remaining.map((item) => (
                   <button
                     key={item.q}
                     onClick={() => handleAsk(item)}
                     disabled={typing}
-                    className="rounded-full border border-border-medium px-4 py-2 text-sm text-text-secondary transition-colors hover:border-accent-purple hover:text-text-primary disabled:cursor-not-allowed disabled:opacity-50"
+                    className="rounded-full border-2 border-ink bg-card px-4 py-2 text-sm font-medium text-ink transition-colors hover:bg-flare hover:text-paper disabled:cursor-not-allowed disabled:opacity-50"
                   >
                     {item.q}
                   </button>
                 ))
               ) : (
-                <span className="text-sm text-text-tertiary">
+                <span className="font-mono text-sm uppercase tracking-wide text-ink-faint">
                   That’s the tour. The protocol covers the rest.
                 </span>
               )}

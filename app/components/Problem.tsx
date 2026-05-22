@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { RotateCw } from "lucide-react";
 import FadeIn from "./ui/FadeIn";
 import SectionLabel from "./ui/SectionLabel";
 
@@ -24,15 +25,15 @@ const loop = [
 
 export default function Problem() {
   return (
-    <section className="relative bg-[#08080d] px-6 py-24 md:px-8 md:py-32 lg:py-40">
+    <section className="relative border-t-2 border-ink bg-bone px-6 py-24 md:px-8 md:py-28 lg:py-32">
       <div className="mx-auto max-w-7xl">
         <div className="mx-auto max-w-3xl text-center">
           <FadeIn>
             <SectionLabel>The Pattern</SectionLabel>
-            <h2 className="mt-5 text-4xl font-bold tracking-tight text-text-primary md:text-5xl">
+            <h2 className="mt-6 font-display text-4xl font-extrabold tracking-tight text-ink md:text-5xl">
               You have ideas. You start. You stop.
             </h2>
-            <p className="mt-6 text-lg leading-relaxed text-text-secondary">
+            <p className="mt-5 text-lg leading-relaxed text-ink-soft">
               Notebooks full of half-built projects. Domains you bought and
               forgot. Tools you signed up for and abandoned. The problem isn’t
               your ideas. The problem is the loop.
@@ -51,28 +52,37 @@ export default function Problem() {
             <motion.div
               key={step.num}
               variants={{
-                hidden: { opacity: 0, x: -24 },
+                hidden: { opacity: 0, y: 24 },
                 show: {
                   opacity: 1,
-                  x: 0,
-                  transition: { duration: 0.6, ease: "easeOut" },
+                  y: 0,
+                  transition: { duration: 0.5, ease: "easeOut" },
                 },
               }}
-              className="rounded-2xl border border-border-subtle bg-bg-secondary p-8"
+              className="rounded-xl border-2 border-ink bg-card p-8 shadow-brut"
             >
-              <div className="gradient-text text-2xl font-bold">{step.num}</div>
-              <div className="mt-2 text-sm font-semibold uppercase tracking-widest text-text-tertiary">
+              <div className="font-display text-5xl font-black text-flare">
+                {step.num}
+              </div>
+              <div className="mt-3 font-mono text-sm font-semibold uppercase tracking-[0.18em] text-ink">
                 {step.title}
               </div>
-              <p className="mt-4 text-lg leading-relaxed text-text-secondary">
+              <p className="mt-4 text-lg leading-relaxed text-ink-soft">
                 {step.body}
               </p>
             </motion.div>
           ))}
         </motion.div>
 
-        <FadeIn delay={0.1}>
-          <p className="mx-auto mt-16 max-w-3xl text-center text-2xl leading-snug text-text-primary">
+        <FadeIn delay={0.1} className="mt-12 flex justify-center">
+          <span className="inline-flex items-center gap-2 rounded-full border-2 border-ink bg-card px-4 py-2 font-mono text-xs font-semibold uppercase tracking-[0.18em] text-ink shadow-brut">
+            <RotateCw className="h-4 w-4 text-flare" />
+            Repeat forever
+          </span>
+        </FadeIn>
+
+        <FadeIn delay={0.15}>
+          <p className="mx-auto mt-12 max-w-3xl text-center font-display text-2xl font-bold leading-snug text-ink md:text-3xl">
             One Product AI breaks the loop by removing every decision that
             doesn’t matter.
           </p>

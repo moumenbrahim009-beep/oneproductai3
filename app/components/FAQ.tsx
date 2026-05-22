@@ -55,37 +55,49 @@ export default function FAQ() {
   return (
     <section
       id="faq"
-      className="relative bg-[#08080d] px-6 py-24 md:px-8 md:py-32 lg:py-40"
+      className="relative scroll-mt-24 border-t-2 border-ink bg-bone px-6 py-24 md:px-8 md:py-28 lg:py-32"
     >
       <div className="mx-auto max-w-3xl">
         <div className="text-center">
           <FadeIn>
             <SectionLabel>Questions</SectionLabel>
-            <h2 className="mt-5 text-4xl font-bold tracking-tight text-text-primary md:text-5xl">
+            <h2 className="mt-6 font-display text-4xl font-extrabold tracking-tight text-ink md:text-5xl">
               Things people ask.
             </h2>
           </FadeIn>
         </div>
 
         <FadeIn delay={0.1} className="mt-14">
-          <div className="divide-y divide-border-subtle border-y border-border-subtle">
+          <div className="space-y-3">
             {faqs.map((faq, i) => {
               const isOpen = open === i;
               return (
-                <div key={i}>
+                <div
+                  key={i}
+                  className={`rounded-xl border-2 border-ink bg-card transition-shadow ${
+                    isOpen ? "shadow-brut" : ""
+                  }`}
+                >
                   <button
                     onClick={() => setOpen(isOpen ? null : i)}
                     aria-expanded={isOpen}
-                    className="flex w-full items-center justify-between gap-4 py-5 text-left"
+                    className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left"
                   >
-                    <span className="text-lg font-medium text-text-primary">
+                    <span className="font-display font-bold text-ink">
                       {faq.q}
                     </span>
-                    <Plus
-                      className={`h-5 w-5 shrink-0 text-text-tertiary transition-transform duration-300 ${
-                        isOpen ? "rotate-45" : ""
+                    <span
+                      className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-md border-2 border-ink transition-all duration-200 ${
+                        isOpen ? "rotate-45 bg-flare" : "bg-card"
                       }`}
-                    />
+                    >
+                      <Plus
+                        className={`h-4 w-4 ${
+                          isOpen ? "text-paper" : "text-ink"
+                        }`}
+                        strokeWidth={3}
+                      />
+                    </span>
                   </button>
                   <AnimatePresence initial={false}>
                     {isOpen && (
@@ -96,7 +108,7 @@ export default function FAQ() {
                         transition={{ duration: 0.3, ease: "easeOut" }}
                         className="overflow-hidden"
                       >
-                        <p className="pb-5 pr-9 leading-relaxed text-text-secondary">
+                        <p className="px-5 pb-5 leading-relaxed text-ink-soft">
                           {faq.a}
                         </p>
                       </motion.div>

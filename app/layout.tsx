@@ -35,7 +35,7 @@ export default function RootLayout({
       lang="en"
       className={`${inter.variable} ${interTight.variable} antialiased`}
     >
-      <body>{children}</body>
+      <body className="bg-paper text-ink antialiased">{children}</body>
     </html>
   );
 }
