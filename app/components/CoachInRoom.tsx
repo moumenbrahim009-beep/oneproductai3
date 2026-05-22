@@ -1,7 +1,13 @@
 "use client";
 
-import { useRef, useState } from "react";
-import { ArrowRight } from "lucide-react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  AnimatePresence,
+  motion,
+  useInView,
+  useReducedMotion,
+} from "framer-motion";
+import { Check, RotateCcw } from "lucide-react";
 import FadeIn from "./ui/FadeIn";
 import GradientText from "./ui/GradientText";
 import SectionLabel from "./ui/SectionLabel";
@@ -92,39 +98,66 @@ const conversations: Conversation[] = [
 ];
 
 export default function CoachInRoom() {
-  const scrollRef = useRef<HTMLDivElement>(null);
+  const sceneRef = useRef<HTMLDivElement>(null);
+  const threadRef = useRef<HTMLDivElement>(null);
+  const inView = useInView(sceneRef, { once: true, amount: 0.25 });
+  const reduce = useReducedMotion();
+
   const [active, setActive] = useState(0);
-  const [scrolledPast, setScrolledPast] = useState(false);
+  const [revealed, setRevealed] = useState(0);
+  const [typing, setTyping] = useState(false);
+  const timers = useRef<ReturnType<typeof setTimeout>[]>([]);
 
-  const handleScroll = () => {
-    const el = scrollRef.current;
-    if (!el) return;
-    const max = el.scrollWidth - el.clientWidth;
-    const progress = max > 0 ? el.scrollLeft / max : 0;
-    setActive(Math.round(progress * (conversations.length - 1)));
-    setScrolledPast(el.scrollLeft > 40);
-  };
+  const conv = conversations[active];
 
-  const scrollToIndex = (index: number) => {
-    const el = scrollRef.current;
-    if (!el) return;
-    const card = el.children[index] as HTMLElement | undefined;
-    if (!card) return;
-    el.scrollTo({
-      left: card.offsetLeft - (el.clientWidth - card.clientWidth) / 2,
-      behavior: "smooth",
-    });
-  };
+  const clearTimers = useCallback(() => {
+    timers.current.forEach((t) => clearTimeout(t));
+    timers.current = [];
+  }, []);
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    if (e.key === "ArrowRight") {
-      e.preventDefault();
-      scrollToIndex(Math.min(active + 1, conversations.length - 1));
-    } else if (e.key === "ArrowLeft") {
-      e.preventDefault();
-      scrollToIndex(Math.max(active - 1, 0));
+  const play = useCallback(() => {
+    clearTimers();
+    const msgs = conversations[active].messages;
+    if (reduce) {
+      setTyping(false);
+      setRevealed(msgs.length);
+      return;
     }
-  };
+    setRevealed(0);
+    setTyping(false);
+    let t = 350;
+    msgs.forEach((m, i) => {
+      if (m.role === "coach") {
+        timers.current.push(setTimeout(() => setTyping(true), t));
+        t += 950;
+        timers.current.push(
+          setTimeout(() => {
+            setTyping(false);
+            setRevealed(i + 1);
+          }, t),
+        );
+        t += 450;
+      } else {
+        timers.current.push(setTimeout(() => setRevealed(i + 1), t));
+        t += 750;
+      }
+    });
+  }, [active, reduce, clearTimers]);
+
+  useEffect(() => {
+    if (!inView) return;
+    play();
+    return clearTimers;
+  }, [play, inView, clearTimers]);
+
+  // Keep the latest message in view as the thread fills in.
+  useEffect(() => {
+    const el = threadRef.current;
+    if (!el) return;
+    el.scrollTo({ top: el.scrollHeight, behavior: reduce ? "auto" : "smooth" });
+  }, [revealed, typing, reduce]);
+
+  const finished = revealed >= conv.messages.length;
 
   return (
     <section className="relative px-6 pb-24 pt-32 md:px-8 md:pb-32 md:pt-40 lg:pb-40 lg:pt-48">
@@ -146,100 +179,162 @@ export default function CoachInRoom() {
 
         <FadeIn delay={0.1} className="mt-16">
           <div
-            ref={scrollRef}
-            onScroll={handleScroll}
-            onKeyDown={handleKeyDown}
-            tabIndex={0}
-            role="region"
-            aria-label="Coach conversations, scroll horizontally to read more"
-            className="mx-auto flex max-w-5xl snap-x snap-mandatory gap-6 overflow-x-auto scroll-smooth px-6 py-4 md:gap-8 md:px-8 [-webkit-overflow-scrolling:touch] [mask-image:linear-gradient(to_right,transparent,black_6%,black_94%,transparent)] [scrollbar-width:none] focus:outline-none motion-reduce:scroll-auto [&::-webkit-scrollbar]:hidden"
+            ref={sceneRef}
+            className="grid gap-5 lg:grid-cols-[330px_1fr] lg:gap-8"
           >
-            {conversations.map((c) => (
-              <article
-                key={c.initial}
-                role="article"
-                aria-label={`Conversation with ${c.name}, ${c.status}`}
-                className="group min-w-[90%] shrink-0 snap-center rounded-3xl bg-gradient-to-br from-purple-500/40 to-blue-500/40 p-[1px] transition-transform duration-300 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:translate-y-0 md:min-w-[75%] lg:min-w-[65%]"
-              >
-                <div className="flex min-h-[480px] flex-col rounded-3xl bg-bg-secondary p-8 md:p-10">
-
-                {/* Persona header */}
-                <div className="relative">
-                  <div className="flex items-center gap-4">
-                    <div className="gradient-bg flex h-12 w-12 shrink-0 items-center justify-center rounded-full text-lg font-bold text-white">
-                      {c.initial}
+            {/* Persona selector */}
+            <div
+              role="tablist"
+              aria-label="Choose a conversation to replay"
+              className="grid grid-cols-3 gap-3 lg:grid-cols-1"
+            >
+              {conversations.map((c, i) => {
+                const isActive = i === active;
+                return (
+                  <button
+                    key={c.initial}
+                    role="tab"
+                    aria-selected={isActive}
+                    onClick={() => setActive(i)}
+                    className={`group relative rounded-2xl p-[1px] text-left transition-all duration-300 ${
+                      isActive
+                        ? "bg-gradient-to-br from-purple-500/60 to-blue-500/60 shadow-[0_0_30px_rgba(139,92,246,0.18)]"
+                        : "bg-border-subtle hover:bg-border-strong"
+                    }`}
+                  >
+                    <div className="flex h-full flex-col items-center gap-3 rounded-2xl bg-bg-secondary p-4 text-center lg:flex-row lg:text-left">
+                      <div
+                        className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-base font-bold transition-all duration-300 ${
+                          isActive
+                            ? "gradient-bg text-white"
+                            : "bg-bg-tertiary text-text-secondary group-hover:text-text-primary"
+                        }`}
+                      >
+                        {c.initial}
+                      </div>
+                      <div className="min-w-0">
+                        <div className="truncate text-sm font-semibold text-text-primary">
+                          {c.name}
+                        </div>
+                        <div className="mt-0.5 truncate text-xs uppercase tracking-wide text-text-tertiary">
+                          {c.status}
+                        </div>
+                      </div>
                     </div>
-                    <div>
-                      <div className="text-base font-medium text-text-primary">
-                        {c.name}
-                      </div>
-                      <div className="mt-0.5 text-sm uppercase tracking-wide text-text-tertiary">
-                        {c.status}
-                      </div>
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Conversation panel */}
+            <div className="rounded-3xl bg-gradient-to-br from-purple-500/40 to-blue-500/40 p-[1px] shadow-[0_0_60px_rgba(99,102,241,0.15)]">
+              <div className="flex h-full flex-col rounded-3xl bg-bg-secondary">
+                {/* Panel header */}
+                <div className="flex items-center gap-3 border-b border-border-subtle px-5 py-4 md:px-6">
+                  <div className="gradient-bg flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-sm font-bold text-white">
+                    OPA
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <div className="text-sm font-semibold text-text-primary">
+                      One Product AI · Coach
+                    </div>
+                    <div className="flex items-center gap-1.5 text-xs text-text-tertiary">
+                      <span className="h-2 w-2 rounded-full bg-success" />
+                      Coaching {conv.name.split(" · ")[0]}
                     </div>
                   </div>
-                  <div className="gradient-bg mt-5 h-px w-full opacity-40" />
+                  <button
+                    onClick={play}
+                    aria-label="Replay this conversation"
+                    className="flex shrink-0 items-center gap-1.5 rounded-full border border-border-medium px-3 py-1.5 text-xs font-medium text-text-secondary transition-colors hover:border-accent-purple hover:text-text-primary"
+                  >
+                    <RotateCcw className="h-3.5 w-3.5" />
+                    Replay
+                  </button>
                 </div>
 
-                {/* Conversation */}
-                <div className="relative mt-6 flex flex-col space-y-3">
-                  {c.messages.map((m, i) =>
-                    m.role === "user" ? (
-                      <div key={i} className="flex w-full justify-start">
-                        <div className="max-w-[80%] break-words rounded-2xl bg-bg-tertiary px-4 py-3 text-sm leading-relaxed text-text-primary">
-                          {m.text}
-                        </div>
-                      </div>
-                    ) : (
-                      <div key={i} className="flex w-full flex-col items-end">
-                        <span className="mb-1 mr-1 text-xs font-medium text-text-secondary">
+                {/* Thread */}
+                <div
+                  ref={threadRef}
+                  aria-label={`Conversation with ${conv.name}`}
+                  className="flex h-[400px] flex-col gap-3 overflow-y-auto px-5 py-5 md:h-[440px] md:px-6 [scrollbar-width:thin]"
+                >
+                  <AnimatePresence initial={false}>
+                    {conv.messages.slice(0, revealed).map((m, i) =>
+                      m.role === "coach" ? (
+                        <motion.div
+                          key={`${active}-${i}`}
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.35, ease: "easeOut" }}
+                          className="flex items-end gap-2"
+                        >
+                          <div className="gradient-bg mb-1 flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[10px] font-bold text-white">
+                            OPA
+                          </div>
+                          <div className="max-w-[82%] break-words rounded-2xl rounded-bl-md border border-purple-500/20 bg-gradient-to-br from-purple-500/10 to-blue-500/10 px-4 py-3 text-sm leading-relaxed text-text-primary">
+                            {m.text}
+                          </div>
+                        </motion.div>
+                      ) : (
+                        <motion.div
+                          key={`${active}-${i}`}
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.35, ease: "easeOut" }}
+                          className="flex justify-end"
+                        >
+                          <div className="max-w-[82%] break-words rounded-2xl rounded-br-md bg-bg-tertiary px-4 py-3 text-sm leading-relaxed text-text-secondary">
+                            {m.text}
+                          </div>
+                        </motion.div>
+                      ),
+                    )}
+                    {typing && (
+                      <motion.div
+                        key="typing"
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.25 }}
+                        className="flex items-end gap-2"
+                      >
+                        <div className="gradient-bg mb-1 flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[10px] font-bold text-white">
                           OPA
-                        </span>
-                        <div className="max-w-[80%] break-words rounded-2xl border border-purple-500/20 bg-gradient-to-br from-purple-500/10 to-blue-500/10 px-4 py-3 text-sm leading-relaxed text-text-primary">
-                          {m.text}
                         </div>
-                      </div>
-                    )
-                  )}
+                        <div className="flex items-center gap-1 rounded-2xl rounded-bl-md border border-purple-500/20 bg-gradient-to-br from-purple-500/10 to-blue-500/10 px-4 py-4">
+                          {[0, 1, 2].map((d) => (
+                            <span
+                              key={d}
+                              className="typing-dot h-2 w-2 rounded-full bg-accent-purple"
+                              style={{ animationDelay: `${d * 0.15}s` }}
+                            />
+                          ))}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </div>
 
-                {/* Footer line */}
-                <p className="mt-auto w-full whitespace-normal break-words px-4 pt-6 text-center text-sm italic text-text-tertiary">
-                  &ldquo;{c.footer}&rdquo;
-                </p>
+                {/* Outcome footer */}
+                <div className="border-t border-border-subtle px-5 py-4 md:px-6">
+                  <div className="flex items-center justify-center gap-2 text-center transition-opacity duration-500">
+                    <Check
+                      className={`h-4 w-4 shrink-0 transition-colors duration-500 ${
+                        finished ? "text-success" : "text-text-tertiary/40"
+                      }`}
+                    />
+                    <span
+                      className={`text-sm italic transition-colors duration-500 ${
+                        finished ? "text-text-secondary" : "text-text-tertiary/40"
+                      }`}
+                    >
+                      {conv.footer}
+                    </span>
+                  </div>
                 </div>
-              </article>
-            ))}
-          </div>
-
-          {/* Dot indicators */}
-          <div className="mt-6 flex justify-center gap-2.5">
-            {conversations.map((c, i) => (
-              <button
-                key={c.initial}
-                onClick={() => scrollToIndex(i)}
-                aria-label={`Go to conversation ${i + 1}`}
-                aria-current={active === i}
-                className={`h-2.5 w-2.5 rounded-full transition-all duration-300 ${
-                  active === i
-                    ? "gradient-bg scale-110"
-                    : "border border-border-strong"
-                }`}
-              />
-            ))}
-          </div>
-
-          {/* Scroll affordance */}
-          <div
-            className={`mt-6 flex items-center justify-center gap-1.5 text-sm text-text-tertiary transition-opacity duration-300 md:mt-8 ${
-              scrolledPast ? "opacity-0" : "opacity-100"
-            }`}
-          >
-            <span className="md:hidden">Swipe to read more conversations</span>
-            <span className="hidden md:inline">
-              Scroll horizontally to read more
-            </span>
-            <ArrowRight className="h-4 w-4" />
+              </div>
+            </div>
           </div>
         </FadeIn>
 
