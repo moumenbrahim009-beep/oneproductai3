@@ -127,7 +127,7 @@ export default function CoachInRoom() {
   };
 
   return (
-    <section className="relative px-6 py-24 md:px-8 md:py-32 lg:py-40">
+    <section className="relative px-6 pb-24 pt-32 md:px-8 md:pb-32 md:pt-40 lg:pb-40 lg:pt-48">
       <div className="mx-auto max-w-7xl">
         <div className="mx-auto max-w-3xl text-center">
           <FadeIn>
@@ -192,11 +192,12 @@ export default function CoachInRoom() {
                         </div>
                       </div>
                     ) : (
-                      <div key={i} className="flex flex-col items-end">
+                      <div key={i} className="flex w-full flex-col items-end">
                         <span className="mb-1 mr-1 text-xs font-medium text-text-secondary">
                           OPA
                         </span>
-                        <div className="max-w-[75%] rounded-2xl border border-purple-500/20 bg-gradient-to-br from-purple-500/15 to-blue-500/15 px-4 py-3 text-sm leading-relaxed text-text-primary">
+                        <div className="relative max-w-[75%] break-words rounded-2xl bg-bg-secondary px-4 py-3 text-sm leading-relaxed text-text-primary">
+                          <div className="gradient-bg pointer-events-none absolute inset-0 rounded-2xl p-px [mask:linear-gradient(#000_0_0)_content-box,linear-gradient(#000_0_0)] [mask-composite:exclude]" />
                           {m.text}
                         </div>
                       </div>
@@ -205,7 +206,7 @@ export default function CoachInRoom() {
                 </div>
 
                 {/* Footer line */}
-                <p className="relative mt-auto pt-6 text-center text-sm italic text-text-tertiary">
+                <p className="mt-auto w-full break-words pt-6 text-center text-sm italic text-text-tertiary">
                   &ldquo;{c.footer}&rdquo;
                 </p>
               </article>
