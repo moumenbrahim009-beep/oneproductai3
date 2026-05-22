@@ -159,10 +159,9 @@ export default function CoachInRoom() {
                 key={c.initial}
                 role="article"
                 aria-label={`Conversation with ${c.name}, ${c.status}`}
-                className="group relative flex min-h-[480px] min-w-[85%] shrink-0 snap-center flex-col rounded-3xl bg-bg-secondary p-8 transition-transform duration-300 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:translate-y-0 md:min-w-[70%] md:p-10 lg:min-w-[65%]"
+                className="group min-w-[85%] shrink-0 snap-center rounded-3xl bg-gradient-to-br from-purple-500/40 to-blue-500/40 p-[1px] transition-transform duration-300 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:translate-y-0 md:min-w-[70%] lg:min-w-[65%]"
               >
-                {/* Gradient border (brightens on hover) */}
-                <div className="gradient-bg pointer-events-none absolute inset-0 rounded-3xl p-px opacity-50 transition-opacity duration-300 group-hover:opacity-100 [mask:linear-gradient(#000_0_0)_content-box,linear-gradient(#000_0_0)] [mask-composite:exclude]" />
+                <div className="flex min-h-[480px] flex-col rounded-3xl bg-bg-secondary p-8 md:p-10">
 
                 {/* Persona header */}
                 <div className="relative">
@@ -196,8 +195,7 @@ export default function CoachInRoom() {
                         <span className="mb-1 mr-1 text-xs font-medium text-text-secondary">
                           OPA
                         </span>
-                        <div className="relative max-w-[75%] break-words rounded-2xl bg-bg-secondary px-4 py-3 text-sm leading-relaxed text-text-primary">
-                          <div className="gradient-bg pointer-events-none absolute inset-0 rounded-2xl p-px [mask:linear-gradient(#000_0_0)_content-box,linear-gradient(#000_0_0)] [mask-composite:exclude]" />
+                        <div className="max-w-[75%] break-words rounded-2xl border border-purple-500/20 bg-gradient-to-br from-purple-500/10 to-blue-500/10 px-4 py-3 text-sm leading-relaxed text-text-primary">
                           {m.text}
                         </div>
                       </div>
@@ -209,6 +207,7 @@ export default function CoachInRoom() {
                 <p className="mt-auto w-full break-words pt-6 text-center text-sm italic text-text-tertiary">
                   &ldquo;{c.footer}&rdquo;
                 </p>
+                </div>
               </article>
             ))}
           </div>
