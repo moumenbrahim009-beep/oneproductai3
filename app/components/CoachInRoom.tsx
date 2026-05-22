@@ -152,14 +152,14 @@ export default function CoachInRoom() {
             tabIndex={0}
             role="region"
             aria-label="Coach conversations, scroll horizontally to read more"
-            className="mx-auto flex max-w-5xl snap-x snap-mandatory gap-6 overflow-x-auto scroll-smooth px-6 py-4 [-webkit-overflow-scrolling:touch] [mask-image:linear-gradient(to_right,transparent,black_6%,black_94%,transparent)] [scrollbar-width:none] focus:outline-none motion-reduce:scroll-auto [&::-webkit-scrollbar]:hidden"
+            className="mx-auto flex max-w-5xl snap-x snap-mandatory gap-6 overflow-x-auto scroll-smooth px-6 py-4 md:gap-8 md:px-8 [-webkit-overflow-scrolling:touch] [mask-image:linear-gradient(to_right,transparent,black_6%,black_94%,transparent)] [scrollbar-width:none] focus:outline-none motion-reduce:scroll-auto [&::-webkit-scrollbar]:hidden"
           >
             {conversations.map((c) => (
               <article
                 key={c.initial}
                 role="article"
                 aria-label={`Conversation with ${c.name}, ${c.status}`}
-                className="group min-w-[85%] shrink-0 snap-center rounded-3xl bg-gradient-to-br from-purple-500/40 to-blue-500/40 p-[1px] transition-transform duration-300 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:translate-y-0 md:min-w-[70%] lg:min-w-[65%]"
+                className="group min-w-[90%] shrink-0 snap-center rounded-3xl bg-gradient-to-br from-purple-500/40 to-blue-500/40 p-[1px] transition-transform duration-300 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:translate-y-0 md:min-w-[75%] lg:min-w-[65%]"
               >
                 <div className="flex min-h-[480px] flex-col rounded-3xl bg-bg-secondary p-8 md:p-10">
 
@@ -185,8 +185,8 @@ export default function CoachInRoom() {
                 <div className="relative mt-6 flex flex-col space-y-3">
                   {c.messages.map((m, i) =>
                     m.role === "user" ? (
-                      <div key={i} className="flex justify-start">
-                        <div className="max-w-[75%] rounded-2xl bg-bg-tertiary px-4 py-3 text-sm leading-relaxed text-text-primary">
+                      <div key={i} className="flex w-full justify-start">
+                        <div className="max-w-[80%] break-words rounded-2xl bg-bg-tertiary px-4 py-3 text-sm leading-relaxed text-text-primary">
                           {m.text}
                         </div>
                       </div>
@@ -195,7 +195,7 @@ export default function CoachInRoom() {
                         <span className="mb-1 mr-1 text-xs font-medium text-text-secondary">
                           OPA
                         </span>
-                        <div className="max-w-[75%] break-words rounded-2xl border border-purple-500/20 bg-gradient-to-br from-purple-500/10 to-blue-500/10 px-4 py-3 text-sm leading-relaxed text-text-primary">
+                        <div className="max-w-[80%] break-words rounded-2xl border border-purple-500/20 bg-gradient-to-br from-purple-500/10 to-blue-500/10 px-4 py-3 text-sm leading-relaxed text-text-primary">
                           {m.text}
                         </div>
                       </div>
@@ -204,7 +204,7 @@ export default function CoachInRoom() {
                 </div>
 
                 {/* Footer line */}
-                <p className="mt-auto w-full break-words pt-6 text-center text-sm italic text-text-tertiary">
+                <p className="mt-auto w-full whitespace-normal break-words px-4 pt-6 text-center text-sm italic text-text-tertiary">
                   &ldquo;{c.footer}&rdquo;
                 </p>
                 </div>
@@ -231,7 +231,7 @@ export default function CoachInRoom() {
 
           {/* Scroll affordance */}
           <div
-            className={`mt-5 flex items-center justify-center gap-1.5 text-sm text-text-tertiary transition-opacity duration-300 ${
+            className={`mt-6 flex items-center justify-center gap-1.5 text-sm text-text-tertiary transition-opacity duration-300 md:mt-8 ${
               scrolledPast ? "opacity-0" : "opacity-100"
             }`}
           >
