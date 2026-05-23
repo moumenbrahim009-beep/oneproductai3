@@ -39,7 +39,7 @@ export default function FinalCTA() {
 
           <Reveal delay={0.2}>
             <div className="mt-10 flex flex-col items-center gap-4">
-              <Button href="/checkout" size="lg">
+              <Button size="lg">
                 Get Started — $49
                 <ArrowRight className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
               </Button>

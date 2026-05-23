@@ -56,7 +56,7 @@ export default function Nav() {
           ))}
         </div>
 
-        <Button href="/checkout" size="md" className="text-sm">
+        <Button size="md" className="text-sm">
           Get Started
         </Button>
       </div>

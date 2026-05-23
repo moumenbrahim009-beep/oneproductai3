@@ -7,10 +7,34 @@ import {
   useInView,
   useReducedMotion,
 } from "framer-motion";
-import { Check, RotateCcw } from "lucide-react";
+import { Check, Clock, Download, MessageCircle, RotateCcw } from "lucide-react";
 import Reveal from "./ui/Reveal";
 import GradientText from "./ui/GradientText";
 import SectionLabel from "./ui/SectionLabel";
+
+const setupSteps = [
+  {
+    icon: Download,
+    title: "Load the Master Prompt",
+    body: "One prompt, one paste, into free Claude or ChatGPT. The Coach now knows the 14-day protocol cold.",
+  },
+  {
+    icon: MessageCircle,
+    title: "Open the day in your portal",
+    body: "Every day in the Notion portal has the day's objective, the script, and the done check.",
+  },
+  {
+    icon: Clock,
+    title: "Talk it through",
+    body: "Stuck, lost, or doubting? The Coach catches you. Operator tone. No hype. Just the next step.",
+  },
+];
+
+const traits = [
+  "Always available · 24/7",
+  "Knows all 14 days",
+  "Free Claude or ChatGPT — no subscription",
+];
 
 type Message = { role: "user" | "coach"; text: string };
 
@@ -180,7 +204,54 @@ export default function CoachInRoom() {
           </Reveal>
         </div>
 
-        <Reveal delay={0.1} className="mt-16">
+        {/* How the Coach works — setup explainer */}
+        <Reveal delay={0.12} className="mt-14">
+          <div className="mx-auto grid max-w-5xl gap-4 md:grid-cols-3">
+            {setupSteps.map((s, i) => {
+              const Icon = s.icon;
+              return (
+                <div
+                  key={s.title}
+                  className="glass relative overflow-hidden rounded-2xl border border-white/8 p-5 transition-colors duration-300 hover:border-violet/30"
+                >
+                  <div className="flex items-center gap-3">
+                    <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-violet via-indigo to-cyan text-white shadow-[0_4px_14px_-4px_rgba(139,92,246,0.7)]">
+                      <Icon className="h-4 w-4" strokeWidth={2.5} />
+                    </span>
+                    <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-ink-faint">
+                      Step {i + 1}
+                    </span>
+                  </div>
+                  <h3 className="mt-4 font-display text-base font-bold text-ink">
+                    {s.title}
+                  </h3>
+                  <p className="mt-2 text-sm leading-relaxed text-ink-muted">
+                    {s.body}
+                  </p>
+                </div>
+              );
+            })}
+          </div>
+          <div className="mx-auto mt-6 flex max-w-3xl flex-wrap items-center justify-center gap-2.5">
+            {traits.map((t) => (
+              <span
+                key={t}
+                className="flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-3.5 py-1.5 text-xs text-ink-muted"
+              >
+                <span className="h-1.5 w-1.5 rounded-full bg-gradient-to-r from-violet to-cyan" />
+                {t}
+              </span>
+            ))}
+          </div>
+        </Reveal>
+
+        <Reveal delay={0.15} className="mt-20 text-center">
+          <span className="text-[11px] font-bold uppercase tracking-[0.22em] text-ink-faint">
+            See it in action — three real coaching moments
+          </span>
+        </Reveal>
+
+        <Reveal delay={0.1} className="mt-6">
           <div
             ref={sceneRef}
             className="grid gap-5 lg:grid-cols-[320px_1fr] lg:gap-8"

@@ -7,7 +7,10 @@
       "Bash(git commit -m ' *)",
       "Bash(git push *)",
       "Bash(curl -s -o /dev/null -w \"HTTP %{http_code}\\\\n\" http://localhost:3000)",
-      "Bash(curl -s http://localhost:3000)"
+      "Bash(curl -s http://localhost:3000)",
+      "mcp__claude_ai_Shopify__get-shop-info",
+      "mcp__claude_ai_Shopify__search_products",
+      "mcp__claude_ai_Shopify__create-product"
     ]
   }
 }

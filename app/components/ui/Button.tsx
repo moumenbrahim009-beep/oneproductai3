@@ -7,9 +7,12 @@ const sizes = {
   lg: "px-8 py-4 text-base",
 };
 
+export const CHECKOUT_URL =
+  "https://thedeepfocusmethod.com/cart/53237414363436:1";
+
 export default function Button({
   children,
-  href = "/checkout",
+  href = CHECKOUT_URL,
   size = "md",
   variant = "primary",
   className = "",
