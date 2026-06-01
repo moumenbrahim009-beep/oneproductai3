@@ -1,0 +1,4 @@
+# Pre-deploy backup artifacts — not part of the theme
+_b64_*
+_css_payload.json
+README.md
