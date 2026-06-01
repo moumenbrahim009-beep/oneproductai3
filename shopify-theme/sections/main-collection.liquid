@@ -1,0 +1,27 @@
+<section class="opa-section">
+  <div class="opa-container">
+    <span class="opa-section-label">Collection</span>
+    <h1 class="opa-section__h2" style="margin-top:1rem;">{{ collection.title }}</h1>
+
+    <div class="opa-grid-4">
+      {%- for product in collection.products -%}
+        <a href="{{ product.url }}" class="opa-card">
+          {%- if product.featured_media -%}
+            <div style="border-radius:1rem;overflow:hidden;margin-bottom:1rem;">
+              {{ product.featured_media | image_url: width: 400 | image_tag: alt: product.title }}
+            </div>
+          {%- endif -%}
+          <div style="font-weight:600;color:var(--ink);">{{ product.title }}</div>
+          <div style="margin-top:.25rem;color:var(--ink-muted);">{{ product.price | money }}</div>
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Collection",
+  "settings": []
+}
+{% endschema %}

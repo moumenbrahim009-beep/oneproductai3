@@ -1,0 +1,27 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "One Product AI",
+    "theme_version": "1.0.0",
+    "theme_author": "BM Digital LLC",
+    "theme_documentation_url": "",
+    "theme_support_url": ""
+  },
+  {
+    "name": "Brand",
+    "settings": [
+      {
+        "type": "text",
+        "id": "brand_name",
+        "label": "Brand name",
+        "default": "One Product AI"
+      },
+      {
+        "type": "url",
+        "id": "checkout_url",
+        "label": "Checkout / product URL",
+        "info": "Where every Get Started button sends the visitor."
+      }
+    ]
+  }
+]

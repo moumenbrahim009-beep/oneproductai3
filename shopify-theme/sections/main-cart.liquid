@@ -1,0 +1,46 @@
+<section class="opa-section">
+  <div class="opa-container" style="max-width:48rem;">
+    <span class="opa-section-label">Cart</span>
+    <h1 class="opa-section__h2" style="margin-top:1rem;">Your <span class="text-gradient">cart</span>.</h1>
+
+    {%- if cart.item_count == 0 -%}
+      <p class="opa-section__sub" style="text-align:left;margin-top:1.5rem;">Your cart is empty.</p>
+      <a href="/" class="opa-btn" style="margin-top:2rem;">
+        <span class="opa-btn__shimmer"></span>
+        <span>Back home</span>
+      </a>
+    {%- else -%}
+      <form action="/cart" method="post" style="margin-top:2rem;display:grid;gap:1.5rem;">
+        {%- for item in cart.items -%}
+          <div class="opa-card" style="display:flex;gap:1.5rem;align-items:center;">
+            {%- if item.image -%}
+              <div style="width:80px;height:80px;border-radius:.75rem;overflow:hidden;flex-shrink:0;">
+                {{ item.image | image_url: width: 200 | image_tag: alt: item.title }}
+              </div>
+            {%- endif -%}
+            <div style="flex:1;">
+              <div style="font-weight:600;color:var(--ink);">{{ item.product.title }}</div>
+              <div style="margin-top:.25rem;color:var(--ink-muted);font-size:.9rem;">{{ item.final_line_price | money }}</div>
+            </div>
+            <a href="{{ item.url_to_remove }}" style="font-size:.85rem;color:var(--ink-faint);">Remove</a>
+          </div>
+        {%- endfor -%}
+        <div style="display:flex;justify-content:space-between;align-items:center;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,0.08);">
+          <div style="font-weight:600;color:var(--ink);">Total</div>
+          <div style="font-family:'Inter Tight',sans-serif;font-weight:800;font-size:1.5rem;color:var(--ink);">{{ cart.total_price | money }}</div>
+        </div>
+        <button type="submit" name="checkout" class="opa-btn opa-btn--lg">
+          <span class="opa-btn__shimmer"></span>
+          <span>Checkout</span>
+        </button>
+      </form>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Cart",
+  "settings": []
+}
+{% endschema %}

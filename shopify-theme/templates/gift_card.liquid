@@ -1,0 +1,10 @@
+<section class="opa-section" style="text-align:center;">
+  <div class="opa-container" style="max-width:36rem;">
+    <span class="opa-section-label">Gift Card</span>
+    <h1 class="opa-section__h2" style="margin-top:1rem;">{{ gift_card.balance | money }}</h1>
+    <p class="opa-section__sub">Use the code below at checkout.</p>
+    <div class="opa-card" style="margin-top:2rem;font-family:monospace;font-size:1.25rem;letter-spacing:.15em;">
+      {{ gift_card.code | format_code }}
+    </div>
+  </div>
+</section>

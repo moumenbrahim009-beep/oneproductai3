@@ -1,0 +1,16 @@
+<section class="opa-section">
+  <div class="opa-container" style="max-width:48rem;">
+    <span class="opa-section-label">Page</span>
+    <h1 class="opa-section__h2" style="margin-top:1rem;">{{ page.title }}</h1>
+    <div style="margin-top:2rem;color:var(--ink-muted);line-height:1.7;">
+      {{ page.content }}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Page",
+  "settings": []
+}
+{% endschema %}

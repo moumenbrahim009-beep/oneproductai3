@@ -1,0 +1,28 @@
+{
+  "sections": {
+    "hero": { "type": "hero", "settings": {} },
+    "problem": { "type": "problem", "settings": {} },
+    "solution": { "type": "solution", "settings": {} },
+    "how-it-works": { "type": "how-it-works", "settings": {} },
+    "what-you-get": { "type": "what-you-get", "settings": {} },
+    "coach": { "type": "coach-in-room", "settings": {} },
+    "timeline": { "type": "timeline", "settings": {} },
+    "field-data": { "type": "field-data", "settings": {} },
+    "guarantee": { "type": "guarantee", "settings": {} },
+    "faq": { "type": "faq", "settings": {} },
+    "final-cta": { "type": "final-cta", "settings": {} }
+  },
+  "order": [
+    "hero",
+    "problem",
+    "solution",
+    "how-it-works",
+    "what-you-get",
+    "coach",
+    "timeline",
+    "field-data",
+    "guarantee",
+    "faq",
+    "final-cta"
+  ]
+}

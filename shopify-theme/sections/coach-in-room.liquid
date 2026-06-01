@@ -1,0 +1,32 @@
+{%- capture scenarios_json -%}
+[
+  {"id":"s1","label":"I have no idea what to build","user":"I have no idea what to build.","coach":["Start with a person, not an idea.","Open Template 01 — Audience Profile. Pick one human you have access to. Not a market. One human.","Three answers: what they spent money on last month, what they keep complaining about, what they fix with workarounds.","Report back with that — and the idea will be obvious."]},
+  {"id":"s2","label":"I am scared to share my draft","user":"I am scared to share my draft.","coach":["Send to one person, not ten.","Pick the one who said yes before. Not the audience. Not Twitter. One.","Subject line: Quick check — would you actually use this? Two sentences. One link.","Their answer is data, not judgment. Forward it to me when it lands."]},
+  {"id":"s3","label":"Day 7 and I am behind","user":"Day 7 and I am behind.","coach":["Drop two nights. Keep the sequence.","Pick the two least essential — usually pricing-experiments and outreach-prep. Move them to a parking lot.","Tonight: do Night 7 only. Forty-five minutes. Done-check at the bottom.","The covenant is the sequence, not the dates. You are still on track."]}
+]
+{%- endcapture -%}
+
+<section class="opa-section opa-dark opa-coach" id="coach">
+  <div class="opa-container">
+    <p class="opa-eyebrow opa-reveal">The Coach</p>
+    <h2 class="opa-h1 opa-reveal">An always-on guide.<br><span class="opa-italic">It tells you the next move.</span></h2>
+    <p class="opa-lead opa-reveal">Pick a scenario. See how the Coach actually responds &mdash; not a sales script. The real thing, lifted from Master Prompt output.</p>
+
+    <div class="opa-sim opa-reveal" data-opa-sim data-scenarios="{{ scenarios_json | strip | escape }}">
+      <div class="opa-sim__frame">
+        <div class="opa-sim__bar">
+          <span class="opa-sim__dot"></span><span class="opa-sim__dot"></span><span class="opa-sim__dot"></span>
+          <span class="opa-sim__title">Coach &middot; session</span>
+        </div>
+        <div class="opa-sim__feed" data-opa-sim-feed>
+          <div class="opa-sim__intro">Pick a scenario below. The Coach will respond.</div>
+        </div>
+        <div class="opa-sim__chips" data-opa-sim-chips></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{ "name": "Coach", "settings": [], "presets": [{ "name": "Coach" }] }
+{% endschema %}
