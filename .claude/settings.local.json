@@ -10,7 +10,27 @@
       "Bash(curl -s http://localhost:3000)",
       "mcp__claude_ai_Shopify__get-shop-info",
       "mcp__claude_ai_Shopify__search_products",
-      "mcp__claude_ai_Shopify__create-product"
+      "mcp__claude_ai_Shopify__create-product",
+      "Bash(npx -y @shopify/cli@latest store execute --store ugmfjg-8y.myshopify.com --query 'query { shop { name myshopifyDomain primaryDomain { url } currencyCode } }')",
+      "Bash(shopify version *)",
+      "PowerShell(shopify version *)",
+      "PowerShell(python -c \"import json,sys; d=json.load\\(open\\(r'C:\\\\Users\\\\ADMIN\\\\.claude\\\\projects\\\\C--Users-ADMIN-Documents-GitHub-oneproductai3\\\\3dde9cb8-8580-4ce1-bbc5-8b14916a6377\\\\tool-results\\\\mcp-claude_ai_Shopify-graphql_schema-1779706346143.txt',encoding='utf-8'\\)\\); [print\\(f['name']\\) for f in d['data']['__type']['fields'] if 'heme' in f['name']]\")",
+      "PowerShell(python -c \"import json; d=json.load\\(open\\(r'C:\\\\Users\\\\ADMIN\\\\.claude\\\\projects\\\\C--Users-ADMIN-Documents-GitHub-oneproductai3\\\\3dde9cb8-8580-4ce1-bbc5-8b14916a6377\\\\tool-results\\\\mcp-claude_ai_Shopify-graphql_schema-1779706346143.txt',encoding='utf-8'\\)\\); m=[f for f in d['data']['__type']['fields'] if f['name'] in \\('themeDuplicate','themeFilesUpsert'\\)]; [print\\(f['name'],'::',json.dumps\\(f['args'],default=str\\)[:600]\\) for f in m]\")",
+      "mcp__claude_ai_Shopify__graphql_schema",
+      "mcp__claude_ai_Shopify__graphql_mutation",
+      "PowerShell(python \"C:\\\\Users\\\\ADMIN\\\\Documents\\\\GitHub\\\\oneproductai3\\\\shopify-theme\\\\_upload_payload.py\")",
+      "PowerShell(Test-Path *)",
+      "PowerShell(Out-File *)",
+      "mcp__claude_ai_Shopify__graphql_query",
+      "Bash(dir *)",
+      "PowerShell(npm *)",
+      "PowerShell(Get-ChildItem 'C:\\\\Users\\\\ADMIN\\\\Documents\\\\GitHub\\\\oneproductai3\\\\shopify-theme\\\\' -Recurse -File | Select-Object @{N='Path';E={$_.FullName.Replace\\('C:\\\\Users\\\\ADMIN\\\\Documents\\\\GitHub\\\\oneproductai3\\\\shopify-theme\\\\',''\\)}}, @{N='KB';E={[math]::Round\\($_.Length/1KB,1\\)}} | Sort-Object Path | Format-Table -AutoSize)",
+      "Bash(gh api *)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebFetch(domain:github.com)",
+      "Bash(git checkout *)",
+      "Bash(git commit *)",
+      "PowerShell(Remove-Item *)"
     ]
   }
 }

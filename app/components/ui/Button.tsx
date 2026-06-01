@@ -8,7 +8,7 @@ const sizes = {
 };
 
 export const CHECKOUT_URL =
-  "https://thedeepfocusmethod.com/cart/53237414363436:1";
+  "https://ugmfjg-8y.myshopify.com/products/one-product-ai";
 
 export default function Button({
   children,
