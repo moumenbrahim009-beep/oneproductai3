@@ -1,0 +1,12 @@
+{
+  "current": {
+    "brand_name": "One Product AI",
+    "checkout_url": "/products/one-product-ai"
+  },
+  "presets": {
+    "Default": {
+      "brand_name": "One Product AI",
+      "checkout_url": "/products/one-product-ai"
+    }
+  }
+}

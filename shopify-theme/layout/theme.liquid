@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#0a0a0c">
+    <link rel="canonical" href="{{ canonical_url }}">
+
+    <title>
+      {%- if template contains 'product' -%}
+        One Product AI &mdash; Launch your first digital product in 14 nights
+      {%- elsif page_title -%}
+        {{ page_title }} &mdash; One Product AI
+      {%- else -%}
+        One Product AI &mdash; Launch your first digital product in 14 nights
+      {%- endif -%}
+    </title>
+
+    {%- if page_description -%}
+      <meta name="description" content="{{ page_description | escape }}">
+    {%- else -%}
+      <meta name="description" content="One Product AI is a 14-night protocol that takes you from idea to live digital product. Built for the operator stuck in the loop. $49 one-time.">
+    {%- endif -%}
+
+    <meta property="og:title" content="One Product AI">
+    <meta property="og:description" content="Fourteen nights. One protocol. A live product. $49 one-time.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="{{ 'og-image.png' | asset_url }}">
+    <meta property="og:url" content="{{ canonical_url }}">
+    <meta property="og:site_name" content="One Product AI">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@700;800&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&display=swap">
+
+    {{ content_for_header }}
+
+    {{ 'theme.css' | asset_url | stylesheet_tag }}
+  </head>
+  <body class="opa-body">
+    <a class="opa-skip" href="#main">Skip to content</a>
+
+    {% sections 'header-group' %}
+
+    <main id="main" role="main">
+      {{ content_for_layout }}
+    </main>
+
+    {% sections 'footer-group' %}
+
+    <script src="{{ 'theme.js' | asset_url }}" defer></script>
+  </body>
+</html>
